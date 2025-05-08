@@ -6,19 +6,27 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier": "prettier . --write"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "kebab-case": "^2.0.2",
+    "next": "15.3.1",
+    "postcss-import": "^12.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.1"
+    "yaml": "^2.7.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "eslint": "9.26.0",
+    "eslint-config-next": "15.3.1",
+    "prettier": "3.5.3",
+    "tailwindcss": "^1.9.6",
+    "typescript": "^5"
   }
 }
