@@ -1,10 +1,15 @@
+import { PROFILE_SECTION_STYLE as style } from '@/app/constants'
 import { getData } from '@/app/resumeData'
+import { classStr } from '@/app/utils'
 
 export function Profile() {
   const { profile } = getData()
   const profileItems = profile.map(({ text, type }) => (
-    <p className="mt-2 ml-1.5 text-sm text-gray-700 leading-normal" key={text}>
-      <span className="-ml-2 select-none text-gray-600">› </span>
+    <p
+      className={classStr(style.sideMargin, style.itemSpacing, ...style.text)}
+      key={text}
+    >
+      <span className={style.bullet}>› </span>
       {type === 'bold' ? (
         <strong>{text}</strong>
       ) : type === 'italic' ? (
@@ -16,11 +21,8 @@ export function Profile() {
   ))
 
   return (
-    <section className="mt-8 first:mt-0" id="profile">
-      <h2 className="mb-0 font-bold tracking-widest text-sm2 text-purple-700 ">
-        PROFILE
-      </h2>
-
+    <section className={style.sectionSpacing} id="profile">
+      <h2 className={style.header}>PROFILE</h2>
       <section className="mb-0 grid grid-cols-1 ">{profileItems}</section>
     </section>
   )

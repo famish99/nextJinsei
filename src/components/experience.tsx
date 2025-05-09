@@ -1,45 +1,56 @@
+import { EXPERIENCE_SECTION_STYLE as style } from '@/app/constants'
 import { getData } from '@/app/resumeData'
+import { classStr } from '@/app/utils'
 
 export function Experience() {
   const { experience } = getData()
 
   const experienceItems = experience.map(
     ({ employer, title, location, startDate, endDate, tasks }) => {
-      const taskDensity = 'mt-1'
       const taskItems = tasks.map((task) => (
         <li
-          className={`${taskDensity} ml-1.5 text-sm text-gray-700 leading-normal`}
+          className={classStr(
+            style.sideMargin,
+            style.itemSpacing,
+            ...style.text,
+          )}
           key={task}
         >
-          <span className="-ml-2 select-none text-gray-600">›</span>
-          {' ' + task}
+          <span className={style.bullet}>› </span>
+          {task}
         </li>
       ))
 
       return (
-        <section className="mb-4 break-inside-avoid" key={employer}>
+        <section
+          className={classStr('break-inside-avoid', style.subsectionSpacing)}
+          key={employer}
+        >
           <header>
-            <h3
-              id="job-title"
-              className="text-lg font-semibold text-gray-700 leading-snugish"
-            >
+            <h3 id="job-title" className={style.title}>
               {title}
               <span> </span>
-              <span id="company-name" className="text-gray-550 font-semibold">
+              <span
+                id="company-name"
+                className={classStr(
+                  style.lowlightTextColor,
+                  ...style.title.slice(1),
+                )}
+              >
                 @ {employer}
               </span>
             </h3>
             <p
               id="work-date"
-              className="leading-normal text-sm text-gray-700 mt-0.5"
+              className={classStr(...style.text, style.subtitleSpacing)}
             >
               {startDate} – {endDate} |{' '}
-              <span id="location" className="text-gray-550">
+              <span id="location" className={style.lowlightTextColor}>
                 {' ' + location}
               </span>
             </p>
           </header>
-          <ul id="work-description-bullets" className="mt-2">
+          <ul id="work-description-bullets" className={style.listMargin}>
             {taskItems}
           </ul>
         </section>
@@ -48,11 +59,8 @@ export function Experience() {
   )
 
   return (
-    <section className="col-span-3 mt-4 first:mt-0" id="experience">
-      <h2 className="mb-4 font-bold tracking-widest text-sm2 text-purple-700">
-        EXPERIENCE
-      </h2>
-
+    <section className={style.sectionSpacing} id="experience">
+      <h2 className={style.header}>EXPERIENCE</h2>
       {experienceItems}
     </section>
   )

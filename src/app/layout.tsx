@@ -21,9 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
       <Script src="https://kit.fontawesome.com/123eb529e8.js" />
     </html>
   )
