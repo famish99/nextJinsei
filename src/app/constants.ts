@@ -12,14 +12,14 @@ const ARROW_STYLE = classStr(
 )
 
 const BULLET_STYLE = classStr('-ml-2', 'select-none', 'text-gray-600')
-const BASE_TEXT_COLOR = 'text-gray-700'
+const BASE_TEXT_COLOR = 'text-gray-750'
 const BASE_TEXT_LEADING = 'leading-normal'
 const BASE_TEXT_SIZE = 'text-sm'
 const BASE_TEXT_STYLE = [BASE_TEXT_COLOR, BASE_TEXT_LEADING, BASE_TEXT_SIZE]
 
 const HIGHLIGHT_TEXT_COLOR = 'text-blue-700'
 const LIST_HORIZONTAL_MARGIN = 'ml-1.5'
-const LOWLIGHT_TEXT_COLOR = 'text-gray-550'
+const LOWLIGHT_TEXT_COLOR = 'text-gray-600'
 
 const SECTION_SPACING = 'mt-3 first:mt-0'
 
@@ -96,7 +96,7 @@ export const CONTACTS_SECTION_STYLE = {
   highlightTextColor: HIGHLIGHT_TEXT_COLOR,
   lowlightTextColor: LOWLIGHT_TEXT_COLOR,
   sectionMargin: 'mb-8 first:mt-0',
-  text: classStr(BASE_TEXT_COLOR, BASE_TEXT_LEADING, 'text-md'),
+  text: classStr(BASE_TEXT_COLOR, BASE_TEXT_LEADING, 'text-sm3'),
 }
 
 export const PROFILE_SECTION_STYLE = {
