@@ -113,8 +113,7 @@ projects:
   - title: nextJinsei
     description:
       Authored automated resume generation tool that converts a YAML-defined
-      resume into HTML via NextJS then converts the output to PDF via wkhtmltopdf (it
-      built this resume!).
+      resume into HTML via NextJS (it built this resume!).
     link: github.com/famish99/nextJinsei
     stack: TypeScript, React, NextJS
   - title: Cuenta

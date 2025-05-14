@@ -1,0 +1,11 @@
+services:
+  server:
+    command: npm run dev
+    build:
+      context: .
+      dockerfile: config/Dockerfile
+      target: server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app:cached
