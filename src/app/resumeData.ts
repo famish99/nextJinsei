@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { writeFile } from 'fs/promises'
 import { cache } from 'react'
 import YAML from 'yaml'
 
@@ -8,7 +9,7 @@ type HeaderData = {
   title: string
 }
 
-type ContactData = {
+export type ContactData = {
   email: string
   phone: {
     countryCode: string
@@ -19,12 +20,12 @@ type ContactData = {
   github?: string
 }
 
-type ProfileItem = {
+export type ProfileItem = {
   text: string
   type?: string
 }
 
-type ExperienceItem = {
+export type ExperienceItem = {
   employer: string
   title: string
   location: string
@@ -69,3 +70,8 @@ function fetchData(): ResumeData {
 }
 
 export const getData = cache(fetchData)
+
+export async function saveData(data: ResumeData) {
+  const filePath = process.cwd() + '/safe_resume.yaml'
+  await writeFile(filePath, YAML.stringify(data))
+}

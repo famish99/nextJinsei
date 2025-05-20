@@ -1,10 +1,13 @@
 import { HEADER_SECTION_STYLE as style } from '@/app/constants'
 import { getData } from '@/app/resumeData'
 
+import { EditableTitle } from './EditableTitle'
+
 export function HeaderSection() {
   const {
     header: { firstName, lastName, title },
   } = getData()
+
   return (
     <header
       className="
@@ -29,11 +32,7 @@ export function HeaderSection() {
         {firstName} {lastName}
       </h1>
 
-      <h2 id="industry-title" className={style.title}>
-        <code className={style.title} role="heading" aria-label={title}>
-          {title}
-        </code>
-      </h2>
+      <EditableTitle title={title} className={style.title} />
     </header>
   )
 }
