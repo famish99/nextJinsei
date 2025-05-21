@@ -4,18 +4,9 @@ import { saveContact } from '@/app/actions/contact'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
+import { ContactData } from '@/types/resume'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-interface ContactData {
-  email: string
-  phone: {
-    countryCode: string
-    raw: string
-    formatted: string
-  }
-  linkedin: string
-  github?: string
-}
 
 interface ContactEditorProps {
   contacts: ContactData
@@ -23,25 +14,50 @@ interface ContactEditorProps {
 
 export function ContactEditor({ contacts }: ContactEditorProps) {
   const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState<ContactData>(contacts)
+  const router = useRouter()
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData((prev) => {
+      if (name.startsWith('phone.')) {
+        const phoneField = name.split('.')[1] as keyof typeof prev.phone
+        return {
+          ...prev,
+          phone: {
+            ...prev.phone,
+            [phoneField]: value,
+          },
+        }
+      }
+      return {
+        ...prev,
+        [name]: value,
+      }
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveContact(formData)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
 
   return (
-    <form 
-      action={async (formData) => {
-        const result = await saveContact(formData)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }}
-      className="space-y-6 max-w-2xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
       <FormInput
         label="Email"
         name="email"
-        value={contacts.email}
+        value={formData.email}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleInputChange('email', e.target.value)
+        }
         required
       />
 
@@ -50,21 +66,30 @@ export function ContactEditor({ contacts }: ContactEditorProps) {
         <FormInput
           label="Country Code"
           name="phone.countryCode"
-          value={contacts.phone.countryCode}
+          value={formData.phone.countryCode}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange('phone.countryCode', e.target.value)
+          }
           required
           placeholder="e.g. +1"
         />
         <FormInput
           label="Phone Number"
           name="phone.raw"
-          value={contacts.phone.raw}
+          value={formData.phone.raw}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange('phone.raw', e.target.value)
+          }
           required
           placeholder="e.g. 5551234567"
         />
         <FormInput
           label="Formatted Phone"
           name="phone.formatted"
-          value={contacts.phone.formatted}
+          value={formData.phone.formatted}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange('phone.formatted', e.target.value)
+          }
           required
           placeholder="e.g. (555) 123-4567"
         />
@@ -73,14 +98,20 @@ export function ContactEditor({ contacts }: ContactEditorProps) {
       <FormInput
         label="LinkedIn"
         name="linkedin"
-        value={contacts.linkedin}
+        value={formData.linkedin}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleInputChange('linkedin', e.target.value)
+        }
         required
       />
 
       <FormInput
         label="GitHub"
         name="github"
-        value={contacts.github || ''}
+        value={formData.github || ''}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleInputChange('github', e.target.value)
+        }
         placeholder="Optional"
       />
 

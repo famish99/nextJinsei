@@ -6,7 +6,7 @@ export async function handleEditorSave(
   endpoint: string,
   data: unknown,
   key: string,
-  setError: (error: string | null) => void
+  setError: (error: string | null) => void,
 ) {
   try {
     const response = await fetch(`/api/${endpoint}`, {
@@ -26,7 +26,9 @@ export async function handleEditorSave(
     setError(null)
     return true
   } catch (error) {
-    setError(error instanceof Error ? error.message : 'An unexpected error occurred')
+    setError(
+      error instanceof Error ? error.message : 'An unexpected error occurred',
+    )
     return false
   }
 }

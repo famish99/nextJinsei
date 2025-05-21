@@ -18,7 +18,7 @@ export function EditableTitle({ title, className }: EditableTitleProps) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <h2 id="industry-title" className={className}>
-        <code className={className} role="heading" aria-label={title}>
+        <code className={className} aria-label={title}>
           {title}
         </code>
       </h2>

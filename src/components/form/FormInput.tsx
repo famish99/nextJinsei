@@ -7,6 +7,7 @@ interface FormInputProps {
   required?: boolean
   placeholder?: string
   className?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export function FormInput({
@@ -16,6 +17,7 @@ export function FormInput({
   required = false,
   placeholder,
   className = '',
+  onChange,
 }: FormInputProps) {
   return (
     <div className={className}>
@@ -23,7 +25,8 @@ export function FormInput({
       <input
         type="text"
         name={name}
-        defaultValue={value}
+        value={value}
+        onChange={onChange}
         className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         required={required}
         placeholder={placeholder}

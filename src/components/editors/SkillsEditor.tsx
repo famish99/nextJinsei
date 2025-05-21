@@ -1,9 +1,10 @@
 'use client'
 
+import { saveSkills } from '@/app/actions/skills'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
-import { saveSkills } from '@/app/actions/skills'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface SkillSection {
@@ -18,6 +19,7 @@ interface SkillsEditorProps {
 export function SkillsEditor({ skills }: SkillsEditorProps) {
   const [sections, setSections] = useState<SkillSection[]>(skills)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const addSection = () => {
     setSections([...sections, { title: '', items: [''] }])
@@ -36,27 +38,40 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
   const removeSkillItem = (sectionIndex: number, itemIndex: number) => {
     const newSections = [...sections]
     newSections[sectionIndex].items = newSections[sectionIndex].items.filter(
-      (_, i) => i !== itemIndex
+      (_, i) => i !== itemIndex,
     )
     setSections(newSections)
   }
 
+  const updateSectionTitle = (sectionIndex: number, title: string) => {
+    const newSections = [...sections]
+    newSections[sectionIndex].title = title
+    setSections(newSections)
+  }
+
+  const updateSkillItem = (
+    sectionIndex: number,
+    itemIndex: number,
+    value: string,
+  ) => {
+    const newSections = [...sections]
+    newSections[sectionIndex].items[itemIndex] = value
+    setSections(newSections)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveSkills(sections)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
+
   return (
-    <form 
-      action={async (formData) => {
-        formData.append('itemCount', sections.length.toString())
-        sections.forEach((section, index) => {
-          formData.append(`${index}.itemCount`, section.items.length.toString())
-        })
-        const result = await saveSkills(formData, sections.length)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }}
-      className="space-y-8 max-w-2xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
       {sections.map((section, sectionIndex) => (
@@ -66,6 +81,7 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
               label="Section Title"
               name={`${sectionIndex}.title`}
               value={section.title}
+              onChange={(e) => updateSectionTitle(sectionIndex, e.target.value)}
               required
               className="flex-grow"
             />
@@ -87,6 +103,9 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
                   label={`Skill ${itemIndex + 1}`}
                   name={`${sectionIndex}.items.${itemIndex}`}
                   value={item}
+                  onChange={(e) =>
+                    updateSkillItem(sectionIndex, itemIndex, e.target.value)
+                  }
                   required
                   className="flex-grow"
                 />

@@ -1,14 +1,13 @@
+import { ResumeData } from '@/types/resume'
 import fs from 'fs/promises'
 import { NextResponse } from 'next/server'
 import YAML from 'yaml'
 
-import { ResumeData } from '../resumeData'
+type UpdateFunction<T> = (data: ResumeData, payload: T) => void
 
-type UpdateFunction = (data: ResumeData, payload: any) => void
-
-export async function handleResumeUpdate(
-  updateFn: UpdateFunction,
-  payload: any,
+export async function handleResumeUpdate<T>(
+  updateFn: UpdateFunction<T>,
+  payload: T,
 ) {
   try {
     // Read the current YAML file

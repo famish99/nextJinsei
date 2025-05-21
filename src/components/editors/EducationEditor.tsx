@@ -1,9 +1,10 @@
 'use client'
 
+import { saveEducation } from '@/app/actions/education'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
-import { saveEducation } from '@/app/actions/education'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface EducationData {
@@ -21,6 +22,7 @@ interface EducationEditorProps {
 export function EducationEditor({ education }: EducationEditorProps) {
   const [items, setItems] = useState<EducationData[]>(education)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const addItem = () => {
     setItems([
@@ -38,18 +40,32 @@ export function EducationEditor({ education }: EducationEditorProps) {
     setItems(items.filter((_, i) => i !== index))
   }
 
+  const updateField = (
+    index: number,
+    field: keyof EducationData,
+    value: string,
+  ) => {
+    const newItems = [...items]
+    newItems[index] = {
+      ...newItems[index],
+      [field]: value,
+    }
+    setItems(newItems)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveEducation(items)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
+
   return (
-    <form 
-      action={async (formData) => {
-        const result = await saveEducation(formData, items.length)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }}
-      className="space-y-8 max-w-2xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
       {items.map((item, index) => (
@@ -70,6 +86,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
             label="Institution"
             name={`${index}.institution`}
             value={item.institution}
+            onChange={(e) => updateField(index, 'institution', e.target.value)}
             required
           />
 
@@ -77,6 +94,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
             label="Location"
             name={`${index}.location`}
             value={item.location || ''}
+            onChange={(e) => updateField(index, 'location', e.target.value)}
             placeholder="e.g. New York, NY"
           />
 
@@ -85,6 +103,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
               label="Start Date"
               name={`${index}.startDate`}
               value={item.startDate}
+              onChange={(e) => updateField(index, 'startDate', e.target.value)}
               required
               placeholder="e.g. 2018-09"
             />
@@ -93,6 +112,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
               label="End Date"
               name={`${index}.endDate`}
               value={item.endDate}
+              onChange={(e) => updateField(index, 'endDate', e.target.value)}
               required
               placeholder="e.g. 2022-05 or Present"
             />
@@ -102,6 +122,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
             label="Degree"
             name={`${index}.degree`}
             value={item.degree}
+            onChange={(e) => updateField(index, 'degree', e.target.value)}
             required
             placeholder="e.g. Bachelor of Science in Computer Science"
           />
@@ -119,4 +140,3 @@ export function EducationEditor({ education }: EducationEditorProps) {
     </form>
   )
 }
- 

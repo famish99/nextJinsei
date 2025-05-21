@@ -1,9 +1,10 @@
 'use client'
 
 import { saveProfile } from '@/app/actions/profile'
-import { ProfileItem } from '@/app/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
+import { ProfileItem } from '@/types/resume'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface ProfileEditorProps {
@@ -13,6 +14,7 @@ interface ProfileEditorProps {
 export function ProfileEditor({ profile }: ProfileEditorProps) {
   const [items, setItems] = useState<ProfileItem[]>(profile)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const addItem = () => {
     setItems([...items, { text: '', type: undefined }])
@@ -26,42 +28,47 @@ export function ProfileEditor({ profile }: ProfileEditorProps) {
     const newItems = [...items]
     newItems[index] = {
       ...newItems[index],
-      type: newItems[index].type === type ? undefined : type
+      type: newItems[index].type === type ? undefined : type,
     }
     setItems(newItems)
   }
 
+  const updateText = (index: number, text: string) => {
+    const newItems = [...items]
+    newItems[index] = {
+      ...newItems[index],
+      text,
+    }
+    setItems(newItems)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveProfile(items)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
+
   return (
-    <form 
-      action={async (formData) => {
-        const result = await saveProfile(formData, items.length)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }}
-      className="space-y-6 max-w-4xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
       {error && <ErrorBanner message={error} />}
-      
+
       <div className="space-y-4">
         {items.map((item, index) => (
           <div key={index} className="space-y-2">
             <div className="flex gap-4">
               <textarea
-                name={`${index}.text`}
-                defaultValue={item.text}
+                value={item.text}
+                onChange={(e) => updateText(index, e.target.value)}
                 className="flex-1 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 min-h-[200px] text-base"
                 required
                 placeholder="Enter profile text..."
               />
               <div className="space-y-2">
-                <input
-                  type="hidden"
-                  name={`${index}.type`}
-                  value={item.type || ''}
-                />
                 <Button
                   type="button"
                   variant="secondary"
@@ -103,11 +110,7 @@ export function ProfileEditor({ profile }: ProfileEditorProps) {
       </div>
 
       <div className="flex gap-4">
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={addItem}
-        >
+        <Button type="button" variant="secondary" onClick={addItem}>
           Add Profile Item
         </Button>
         <Button type="submit" variant="primary">

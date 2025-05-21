@@ -1,12 +1,12 @@
 import { firago } from '@/app/fonts'
 import { getData } from '@/app/resumeData'
-import { Contact } from '@/components/contact'
-import { Education } from '@/components/education'
-import { Experience } from '@/components/experience'
-import { HeaderSection } from '@/components/headerSection'
-import { Profile } from '@/components/profile'
-import { Projects } from '@/components/projects'
-import { Skills } from '@/components/skills'
+import { Contact } from '@/components/Contact'
+import { Education } from '@/components/Education'
+import { Experience } from '@/components/Experience'
+import { HeaderSection } from '@/components/HeaderSection'
+import { Profile } from '@/components/Profile'
+import { Projects } from '@/components/Projects'
+import { Skills } from '@/components/Skills'
 
 export default function Home() {
   const { projects } = getData()

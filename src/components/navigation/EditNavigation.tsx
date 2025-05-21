@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const sections = [
+  { name: 'Header', path: '/edit/header' },
   { name: 'Contact', path: '/edit/contact' },
   { name: 'Profile', path: '/edit/profile' },
   { name: 'Experience', path: '/edit' },

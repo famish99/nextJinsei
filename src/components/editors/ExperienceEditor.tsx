@@ -1,12 +1,13 @@
 'use client'
 
-import { ExperienceItem } from '@/app/resumeData'
+import { saveExperience } from '@/app/actions/experience'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
 import { TaskList } from '@/components/form/TaskList'
-import { saveExperience } from '@/app/actions/experience'
-import { useState } from 'react'
+import { ExperienceItem } from '@/types/resume'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
 interface ExperienceFormData extends ExperienceItem {
   isNew?: boolean
@@ -19,6 +20,7 @@ interface ExperienceEditorProps {
 export function ExperienceEditor({ experience }: ExperienceEditorProps) {
   const [items, setItems] = useState<ExperienceFormData[]>(experience)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const addItem = () => {
     setItems([
@@ -39,21 +41,42 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
     setItems(items.filter((_, i) => i !== index))
   }
 
+  const updateField = (
+    index: number,
+    field: keyof ExperienceItem,
+    value: string,
+  ) => {
+    const newItems = [...items]
+    if (field === 'tasks') return // tasks are handled separately
+    newItems[index] = {
+      ...newItems[index],
+      [field]: value,
+    }
+    setItems(newItems)
+  }
+
+  const updateTasks = (index: number, tasks: string[]) => {
+    const newItems = [...items]
+    newItems[index] = {
+      ...newItems[index],
+      tasks,
+    }
+    setItems(newItems)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveExperience(items)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
+
   return (
-    <form 
-      action={async (formData) => {
-        items.forEach((item, index) => {
-          formData.append(`${index}.taskCount`, item.tasks.length.toString())
-        })
-        const result = await saveExperience(formData, items.length)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }}
-      className="space-y-8 max-w-2xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
       <Button type="button" variant="secondary" onClick={addItem}>
@@ -78,6 +101,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
             label="Employer"
             name={`${index}.employer`}
             value={item.employer}
+            onChange={(e) => updateField(index, 'employer', e.target.value)}
             required
             placeholder="Company name"
           />
@@ -86,6 +110,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
             label="Title"
             name={`${index}.title`}
             value={item.title}
+            onChange={(e) => updateField(index, 'title', e.target.value)}
             required
             placeholder="Your role"
           />
@@ -94,6 +119,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
             label="Location"
             name={`${index}.location`}
             value={item.location}
+            onChange={(e) => updateField(index, 'location', e.target.value)}
             required
             placeholder="e.g. New York, NY"
           />
@@ -103,6 +129,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
               label="Start Date"
               name={`${index}.startDate`}
               value={item.startDate}
+              onChange={(e) => updateField(index, 'startDate', e.target.value)}
               required
               placeholder="e.g. 2020-01"
             />
@@ -111,12 +138,16 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
               label="End Date"
               name={`${index}.endDate`}
               value={item.endDate}
+              onChange={(e) => updateField(index, 'endDate', e.target.value)}
               required
               placeholder="e.g. 2023-12 or Present"
             />
           </div>
 
-          <TaskList tasks={item.tasks} name={`${index}.tasks`} />
+          <TaskList
+            tasks={item.tasks}
+            onChange={(tasks) => updateTasks(index, tasks)}
+          />
         </div>
       ))}
 

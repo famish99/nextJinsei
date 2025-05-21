@@ -1,20 +1,11 @@
 'use server'
 
-import { getData, saveData } from '@/app/resumeData'
+import { HeaderData } from '@/types/resume'
 
-export async function saveHeader(formData: FormData) {
-  try {
-    const data = getData()
-    
-    data.header = {
-      firstName: formData.get('firstName')?.toString() || '',
-      lastName: formData.get('lastName')?.toString() || '',
-      title: formData.get('title')?.toString() || ''
-    }
+import { handleResumeAction } from './utils'
 
-    await saveData(data)
-    return { success: true }
-  } catch (error) {
-    return { error: 'Failed to save header information' }
-  }
-} 
+export async function saveHeader(header: HeaderData) {
+  return handleResumeAction((data, header: HeaderData) => {
+    data.header = header
+  }, header)
+}

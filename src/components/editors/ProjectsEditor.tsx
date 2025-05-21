@@ -1,9 +1,10 @@
 'use client'
 
+import { saveProjects } from '@/app/actions/projects'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
-import { saveProjects } from '@/app/actions/projects'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface ProjectItem {
@@ -20,6 +21,7 @@ interface ProjectsEditorProps {
 export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
   const [items, setItems] = useState<ProjectItem[]>(projects)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const addItem = () => {
     setItems([
@@ -37,18 +39,32 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
     setItems(items.filter((_, i) => i !== index))
   }
 
+  const updateField = (
+    index: number,
+    field: keyof ProjectItem,
+    value: string,
+  ) => {
+    const newItems = [...items]
+    newItems[index] = {
+      ...newItems[index],
+      [field]: value,
+    }
+    setItems(newItems)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = await saveProjects(items)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+      router.push('/')
+    }
+  }
+
   return (
-    <form 
-      action={async (formData) => {
-        const result = await saveProjects(formData, items.length)
-        if (result.error) {
-          setError(result.error)
-        } else {
-          setError(null)
-        }
-      }} 
-      className="space-y-8 max-w-2xl"
-    >
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
       {items.map((item, index) => (
@@ -69,6 +85,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
             label="Title"
             name={`${index}.title`}
             value={item.title}
+            onChange={(e) => updateField(index, 'title', e.target.value)}
             required
             placeholder="Project name"
           />
@@ -77,6 +94,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
             label="Tech Stack"
             name={`${index}.stack`}
             value={item.stack}
+            onChange={(e) => updateField(index, 'stack', e.target.value)}
             required
             placeholder="e.g. React, Node.js, PostgreSQL"
           />
@@ -85,6 +103,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
             label="Description"
             name={`${index}.description`}
             value={item.description}
+            onChange={(e) => updateField(index, 'description', e.target.value)}
             required
             placeholder="Brief project description"
           />
@@ -93,6 +112,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
             label="Link"
             name={`${index}.link`}
             value={item.link}
+            onChange={(e) => updateField(index, 'link', e.target.value)}
             required
             placeholder="Project URL or GitHub repository"
           />

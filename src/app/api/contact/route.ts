@@ -1,4 +1,4 @@
-import { ResumeData } from '@/app/resumeData'
+import { ResumeData } from '@/types/resume'
 
 import { handleResumeUpdate } from '../utils'
 
