@@ -24,7 +24,6 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
 
   const addItem = () => {
     setItems([
-      ...items,
       {
         employer: '',
         title: '',
@@ -34,6 +33,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
         tasks: [''],
         isNew: true,
       },
+      ...items,
     ])
   }
 
@@ -79,9 +79,14 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
 
-      <Button type="button" variant="secondary" onClick={addItem}>
-        Add Experience
-      </Button>
+      <div className="flex gap-4">
+        <Button type="button" variant="secondary" onClick={addItem}>
+          Add Experience
+        </Button>
+        <Button type="submit" variant="primary">
+          Save Changes
+        </Button>
+      </div>
 
       {items.map((item, index) => (
         <div key={index} className="space-y-4 p-4 border rounded-lg">
@@ -150,10 +155,6 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
           />
         </div>
       ))}
-
-      <Button type="submit" variant="primary">
-        Save Changes
-      </Button>
     </form>
   )
 }

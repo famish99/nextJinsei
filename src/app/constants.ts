@@ -1,54 +1,20 @@
+import {
+  ARROW_STYLE,
+  BULLET_STYLE,
+  getBaseTextStyle,
+  getSectionHeaderStyle,
+  getTitleTextStyle,
+  loadStyles,
+} from '@/app/config/styles'
 import { classStr } from '@/app/utils'
 
-const ARROW_STYLE = classStr(
-  'inline-block',
-  'text-gray-550',
-  'print:text-black',
-  'font-normal',
-  'group-hover:text-gray-700',
-  'transition',
-  'duration-100',
-  'ease-in',
-)
-
-const BULLET_STYLE = classStr('-ml-2', 'select-none', 'text-gray-600')
-const BASE_TEXT_COLOR = 'text-gray-750'
-const BASE_TEXT_LEADING = 'leading-normal'
-const BASE_TEXT_SIZE = 'text-sm'
-const BASE_TEXT_STYLE = [BASE_TEXT_COLOR, BASE_TEXT_LEADING, BASE_TEXT_SIZE]
-
-const HIGHLIGHT_TEXT_COLOR = 'text-blue-700'
-const LIST_HORIZONTAL_MARGIN = 'ml-1.5'
-const LOWLIGHT_TEXT_COLOR = 'text-gray-600'
-
-const SECTION_SPACING = 'mt-3 first:mt-0'
-
-const SECTION_TEXT_SPACING = 'mb-2.1'
-const SECTION_TEXT_FORMAT = 'font-bold'
-const SECTION_TEXT_TRACKING = 'tracking-widest'
-const SECTION_TEXT_SIZE = 'text-sm2'
-
-const SECTION_HEADER_STYLE = [
-  SECTION_TEXT_SPACING,
-  SECTION_TEXT_FORMAT,
-  SECTION_TEXT_TRACKING,
-  SECTION_TEXT_SIZE,
-  HIGHLIGHT_TEXT_COLOR,
-]
-
-const SUBSECTION_SPACING = 'mb-3 last:md-0 last:pb-2'
-const TITLE_TEXT_FORMAT = 'font-semibold'
-const TITLE_TEXT_LEADING = 'leading-snugish'
-const TITLE_TEXT_SIZE = 'text-lg'
-const TITLE_TEXT_STYLE = [
-  BASE_TEXT_COLOR,
-  TITLE_TEXT_FORMAT,
-  TITLE_TEXT_LEADING,
-  TITLE_TEXT_SIZE,
-]
+const styles = loadStyles()
+const BASE_TEXT_STYLE = getBaseTextStyle()
+const SECTION_HEADER_STYLE = getSectionHeaderStyle()
+const TITLE_TEXT_STYLE = getTitleTextStyle()
 
 export const HEADER_SECTION_STYLE = {
-  highlightTextColor: HIGHLIGHT_TEXT_COLOR,
+  highlightTextColor: `text-${styles.colors.text.highlight}`,
   initials: classStr(
     'initials-container',
     'mr-5',
@@ -57,11 +23,11 @@ export const HEADER_SECTION_STYLE = {
     'pb-3',
     'pt-3',
     'text-white',
-    'bg-blue-700',
+    `bg-${styles.colors.primary}`,
     'font-medium',
-    'px-3 ',
+    'px-3',
   ),
-  baseTextColor: BASE_TEXT_COLOR,
+  baseTextColor: `text-${styles.colors.text.base}`,
   name: classStr(
     'print:text-6xl',
     'lg:text-6xl',
@@ -69,12 +35,12 @@ export const HEADER_SECTION_STYLE = {
     'mr-auto',
     'text-3xl',
     'font-semibold',
-    BASE_TEXT_COLOR,
+    `text-${styles.colors.text.base}`,
     'pb-px',
   ),
   title: classStr(
     'print:text-3xl',
-    HIGHLIGHT_TEXT_COLOR,
+    `text-${styles.colors.text.highlight}`,
     'font-sans',
     'self-center',
     'md:text-3xl',
@@ -88,77 +54,85 @@ export const CONTACTS_SECTION_STYLE = {
   arrow: ARROW_STYLE,
   header: classStr(
     'mb-1.5',
-    SECTION_TEXT_FORMAT,
-    SECTION_TEXT_TRACKING,
-    SECTION_TEXT_SIZE,
-    LOWLIGHT_TEXT_COLOR,
+    styles.typography.weight.section,
+    styles.typography.tracking.section,
+    styles.typography.size.section,
+    `text-${styles.colors.text.lowlight}`,
   ),
-  highlightTextColor: HIGHLIGHT_TEXT_COLOR,
-  lowlightTextColor: LOWLIGHT_TEXT_COLOR,
-  sectionMargin: 'mb-8 first:mt-0',
-  text: classStr(BASE_TEXT_COLOR, BASE_TEXT_LEADING, 'text-sm3'),
+  highlightTextColor: `text-${styles.colors.text.highlight}`,
+  lowlightTextColor: `text-${styles.colors.text.lowlight}`,
+  sectionMargin: styles.spacing.section.margin,
+  text: classStr(
+    `text-${styles.colors.text.base}`,
+    styles.typography.leading.base,
+    'text-sm3',
+  ),
 }
 
 export const PROFILE_SECTION_STYLE = {
   bullet: BULLET_STYLE,
   header: classStr(...SECTION_HEADER_STYLE),
-  itemSpacing: 'mb-2',
-  sectionSpacing: SECTION_SPACING,
-  sideMargin: LIST_HORIZONTAL_MARGIN,
+  itemSpacing: styles.spacing.list.item,
+  sectionSpacing: styles.spacing.section.base,
+  sideMargin: styles.spacing.list.horizontal,
   text: BASE_TEXT_STYLE,
 }
 
 export const EXPERIENCE_SECTION_STYLE = {
   bullet: BULLET_STYLE,
   header: classStr(...SECTION_HEADER_STYLE),
-  itemSpacing: 'mt-1',
-  lowlightTextColor: LOWLIGHT_TEXT_COLOR,
+  itemSpacing: styles.spacing.items.compact,
+  lowlightTextColor: `text-${styles.colors.text.lowlight}`,
   listMargin: 'mt-2',
-  sectionSpacing: SECTION_SPACING,
-  sideMargin: LIST_HORIZONTAL_MARGIN,
-  subsectionSpacing: SUBSECTION_SPACING,
-  subtitleSpacing: 'mt-0.5',
+  sectionSpacing: styles.spacing.section.base,
+  sideMargin: styles.spacing.list.horizontal,
+  subsectionSpacing: styles.spacing.subsection,
+  subtitleSpacing: styles.spacing.subtitle,
   title: classStr(...TITLE_TEXT_STYLE),
   text: BASE_TEXT_STYLE,
 }
 
 export const SKILL_SECTION_STYLE = {
   header: classStr(...SECTION_HEADER_STYLE),
-  itemSpacing: 'mt-2',
-  sectionSpacing: SECTION_SPACING,
-  subsectionSpacing: SUBSECTION_SPACING,
-  skillBoxStyle: `px-2.5 mr-1.6 mb-1.6 text-xs leading-relaxed ${BASE_TEXT_COLOR} bg-gray-200`,
-  skillContainerStyle: `flex flex-wrap -mr-1.6 -mb-1.6`,
+  itemSpacing: styles.spacing.items.base,
+  sectionSpacing: styles.spacing.section.base,
+  subsectionSpacing: styles.spacing.subsection,
+  skillBoxStyle: `px-2.5 mr-1.6 mb-1.6 text-xs leading-relaxed text-${styles.colors.text.base} bg-${styles.colors.background.skill}`,
+  skillContainerStyle: 'flex flex-wrap -mr-1.6 -mb-1.6',
   title: classStr(...TITLE_TEXT_STYLE),
 }
 
 export const PROJECT_SECTION_STYLE = {
   arrow: ARROW_STYLE,
   header: classStr(...SECTION_HEADER_STYLE),
-  descriptionSpacing: 'mt-1.5',
-  sectionSpacing: SECTION_SPACING,
-  subsectionSpacing: SUBSECTION_SPACING,
-  subtitleStyle: `leading-normal text-sm`,
-  stackText: `${BASE_TEXT_LEADING} text-xs ${LOWLIGHT_TEXT_COLOR}`,
+  descriptionSpacing: styles.spacing.description,
+  sectionSpacing: styles.spacing.section.base,
+  subsectionSpacing: styles.spacing.subsection,
+  subtitleStyle: `leading-normal ${styles.typography.size.base}`,
+  stackText: `${styles.typography.leading.base} ${styles.typography.size.small} text-${styles.colors.text.lowlight}`,
   title: classStr(
-    BASE_TEXT_COLOR,
-    TITLE_TEXT_FORMAT,
-    TITLE_TEXT_LEADING,
+    `text-${styles.colors.text.base}`,
+    styles.typography.weight.title,
+    styles.typography.leading.title,
     'text-md',
   ),
   text: BASE_TEXT_STYLE,
 }
 
 export const EDUCATION_SECTION_STYLE = {
-  dateText: classStr(BASE_TEXT_LEADING, BASE_TEXT_SIZE, LOWLIGHT_TEXT_COLOR),
+  dateText: classStr(
+    styles.typography.leading.base,
+    styles.typography.size.base,
+    `text-${styles.colors.text.lowlight}`,
+  ),
   degreeText: classStr('mt-1.5', ...BASE_TEXT_STYLE),
   header: classStr(...SECTION_HEADER_STYLE),
-  sectionSpacing: SECTION_SPACING,
-  subsectionSpacing: SUBSECTION_SPACING,
+  sectionSpacing: styles.spacing.section.base,
+  subsectionSpacing: styles.spacing.subsection,
   title: classStr(
-    BASE_TEXT_COLOR,
-    TITLE_TEXT_FORMAT,
-    TITLE_TEXT_LEADING,
+    `text-${styles.colors.text.base}`,
+    styles.typography.weight.title,
+    styles.typography.leading.title,
     'text-md',
   ),
 }

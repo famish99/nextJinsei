@@ -1,0 +1,51 @@
+{
+  "colors": {
+    "primary": "blue-700",
+    "text": {
+      "base": "gray-750",
+      "highlight": "blue-700",
+      "lowlight": "gray-600",
+      "arrow": "gray-550"
+    },
+    "background": {
+      "skill": "gray-200"
+    }
+  },
+  "spacing": {
+    "section": {
+      "base": "mt-3 first:mt-0",
+      "margin": "mb-8 first:mt-0",
+      "text": "mb-2.1"
+    },
+    "subsection": "mb-3 last:md-0 last:pb-2",
+    "list": {
+      "horizontal": "ml-1.5",
+      "item": "mb-2"
+    },
+    "items": {
+      "base": "mt-2",
+      "compact": "mt-1"
+    },
+    "description": "mt-1.5",
+    "subtitle": "mt-0.5"
+  },
+  "typography": {
+    "tracking": {
+      "section": "tracking-widest"
+    },
+    "leading": {
+      "base": "leading-normal",
+      "title": "leading-snugish"
+    },
+    "size": {
+      "base": "text-sm",
+      "section": "text-sm2",
+      "title": "text-lg",
+      "small": "text-xs"
+    },
+    "weight": {
+      "section": "font-bold",
+      "title": "font-semibold"
+    }
+  }
+}
