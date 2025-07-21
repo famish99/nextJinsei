@@ -3,17 +3,17 @@ header:
   lastName: Nguyen
   title: Software Engineering Lead
 contacts:
-  email: thats@secret.com
+  email: huan.nguyen.26@gmail.com
   phone:
-    countryCode: '+1'
-    raw: 5555555555
-    formatted: (555) 555-5555
+    countryCode: "+1"
+    raw: "5128148260"
+    formatted: (512) 814-8260
   linkedin: linkedin.com/in/huan-nguyen-6a07b28/
   github: github.com/famish99
 profile:
-  - text: >-
-      Passionate software developer with expertise in software architecture, user
-      experience design, rapid prototyping, developer productivity and tools development.
+  - text: Passionate software developer with expertise in software architecture,
+      user experience design, rapid prototyping, developer productivity and
+      tools development.
   - text: US Citizen - Born and raised in Austin, TX
     type: bold
 skills:
@@ -56,12 +56,17 @@ experience:
     startDate: January 2023
     endDate: March 2025
     tasks:
-      - Owned integrations between Warehousing software and Warehouse Automation, Labor Management and Yard Management vendors
-      - Defined standards and created tooling for implementing Datadog monitoring within Terraform
-      - Designed front end application for carton exception handling using TypeScript/React/GraphQL
-      - Built multiple event-based (Kafka) Java Spring Boot applications with automated Avro schema validation
+      - Owned integrations between Warehousing software and Warehouse
+        Automation, Labor Management and Yard Management vendors
+      - Defined standards and created tooling for implementing Datadog
+        monitoring within Terraform
+      - Designed front end application for carton exception handling using
+        TypeScript/React/GraphQL
+      - Built multiple event-based (Kafka) Java Spring Boot applications with
+        automated Avro schema validation
       - Migrated monolithic TSQL databases into Google Cloud Postgres SPDBs
-      - Overhauled runbook system and trained team members for supporting oncall rotation
+      - Overhauled runbook system and trained team members for supporting oncall
+        rotation
   - employer: Shippo
     title: Software Engineer 3
     location: Austin, Texas
@@ -70,15 +75,17 @@ experience:
     tasks:
       - Led the Onboarding and Setup team
       - Designed e-commerce integration frontends using TypeScript/React/Redux
-      - Overhauled OAuth2 authorization framework and token management using Go/HTTP/gRPC-based microservices
+      - Overhauled OAuth2 authorization framework and token management using
+        Go/HTTP/gRPC-based microservices
   - employer: Silicon Labs
     title: Senior Software Engineer
     location: Austin, Texas
     startDate: January 2020
     endDate: July 2021
     tasks:
-      - Lead team responsible for test program release management app development using React/Redux frontend
-        and Python/Tornado/RabbitMQ-based backend
+      - Lead team responsible for test program release management app
+        development using React/Redux frontend and Python/Tornado/RabbitMQ-based
+        backend
       - Mentored interns and new college graduates
   - employer: Renesas Electronics America
     title: Software Engineering Manager
@@ -86,12 +93,12 @@ experience:
     startDate: October 2014
     endDate: December 2019
     tasks:
-      - Architected ClojureScript/Reagent/Re-frame (unidirectional dataflow) based GUI
-        application for data collection using CEFPython framework
-      - Directed Clojure/Immutant based backend API responsible for test result data and
-        file and code organization
-      - Designed software APIs using PyVISA for oscilloscopes, programmable power supplies,
-        digital multimeters, signal generators, electronic loads
+      - Architected ClojureScript/Reagent/Re-frame (unidirectional dataflow)
+        based GUI application for data collection using CEFPython framework
+      - Directed Clojure/Immutant based backend API responsible for test result
+        data and file and code organization
+      - Designed software APIs using PyVISA for oscilloscopes, programmable
+        power supplies, digital multimeters, signal generators, electronic loads
       - Involved in validation test creation for power management ICs
   - employer: Freescale Semiconductor
     title: Electrical Validation Engineer
@@ -99,8 +106,8 @@ experience:
     startDate: August 2010
     endDate: October 2014
     tasks:
-      - Designed a web based test automation framework written in Python using Django
-        backed by MySQL
+      - Designed a web based test automation framework written in Python using
+        Django backed by MySQL
       - Involved in electrical validation for the QorIQ family of products
       - Implemented graphical test automation tool using PyGtk
 education:
@@ -111,16 +118,17 @@ education:
     degree: Bachelor of Science, Electrical and Computer Engineering
 projects:
   - title: nextJinsei
-    description:
-      Authored automated resume generation tool that converts a YAML-defined
-      resume into HTML via NextJS (it built this resume!).
+    description: Authored automated resume generation tool that converts a
+      YAML-defined resume into HTML via NextJS (it built this resume!).
     link: github.com/famish99/nextJinsei
     stack: TypeScript, React, NextJS
   - title: Cuenta
-    description: Authored application to split restaurant bills and tally up debts between friends.
+    description: Authored application to split restaurant bills and tally up debts
+      between friends.
     link: github.com/famish99/cuenta
     stack: Clojure, ClojureScript, Reagent, re-frame
   - title: PyVISA
-    description: Contributed to the PyVISA project to improve the hardware mocking library PyVISA-sim
+    description: Contributed to the PyVISA project to improve the hardware mocking
+      library PyVISA-sim
     link: github.com/pyvisa/pyvisa
     stack: Python, PyVISA

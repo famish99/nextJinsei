@@ -1,5 +1,14 @@
-import { BackToResumeLink } from '@/components/navigation/BackToResumeLink'
-import { EditNavigation } from '@/components/navigation/EditNavigation'
+// import { AmplifyProvider } from '@/components/AmplifyProvider'
+'use client'
+import React from 'react';
+import { ProtectedEditLayout } from '@/components/ProtectedEditLayout'
+import {Authenticator} from "@aws-amplify/ui-react";
+
+import '@aws-amplify/ui-react/styles.css'
+import {Amplify} from "aws-amplify";
+import outputs from '../../../amplify_outputs.json'
+
+Amplify.configure(outputs)
 
 export default function EditLayout({
   children,
@@ -7,13 +16,12 @@ export default function EditLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Edit Resume</h1>
-        <BackToResumeLink />
-      </div>
-      <EditNavigation />
-      {children}
-    </main>
+    <React.StrictMode>
+      <Authenticator hideSignUp>
+        <ProtectedEditLayout>
+          {children}
+        </ProtectedEditLayout>
+      </Authenticator>
+    </React.StrictMode>
   )
 }

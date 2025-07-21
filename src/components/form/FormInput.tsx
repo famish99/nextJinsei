@@ -2,8 +2,9 @@
 
 interface FormInputProps {
   label: string
-  value: string
   name: string
+  type?: string
+  value?: string
   required?: boolean
   placeholder?: string
   className?: string
@@ -12,8 +13,9 @@ interface FormInputProps {
 
 export function FormInput({
   label,
-  value,
   name,
+  type = 'text',
+  value,
   required = false,
   placeholder,
   className = '',
@@ -23,7 +25,7 @@ export function FormInput({
     <div className={className}>
       <label className="block text-sm font-medium text-gray-700">{label}</label>
       <input
-        type="text"
+        type={type}
         name={name}
         value={value}
         onChange={onChange}
