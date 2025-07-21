@@ -5,8 +5,8 @@ header:
 contacts:
   email: huan.nguyen.26@gmail.com
   phone:
-    countryCode: "+1"
-    raw: "5128148260"
+    countryCode: '+1'
+    raw: '5128148260'
     formatted: (512) 814-8260
   linkedin: linkedin.com/in/huan-nguyen-6a07b28/
   github: github.com/famish99
@@ -123,12 +123,14 @@ projects:
     link: github.com/famish99/nextJinsei
     stack: TypeScript, React, NextJS
   - title: Cuenta
-    description: Authored application to split restaurant bills and tally up debts
+    description:
+      Authored application to split restaurant bills and tally up debts
       between friends.
     link: github.com/famish99/cuenta
     stack: Clojure, ClojureScript, Reagent, re-frame
   - title: PyVISA
-    description: Contributed to the PyVISA project to improve the hardware mocking
+    description:
+      Contributed to the PyVISA project to improve the hardware mocking
       library PyVISA-sim
     link: github.com/pyvisa/pyvisa
     stack: Python, PyVISA

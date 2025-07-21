@@ -4,7 +4,7 @@ interface FormInputProps {
   label: string
   name: string
   type?: string
-  value?: string
+  value?: string | null
   required?: boolean
   placeholder?: string
   className?: string
@@ -27,7 +27,7 @@ export function FormInput({
       <input
         type={type}
         name={name}
-        value={value}
+        value={value || ''}
         onChange={onChange}
         className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         required={required}

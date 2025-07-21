@@ -10,7 +10,7 @@ export async function handleResumeAction<T>(
   payload: T,
 ) {
   try {
-    const data = getData()
+    const data = await getData()
     updateFn(data, payload)
     await saveData(data)
     return { success: true }

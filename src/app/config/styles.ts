@@ -1,6 +1,7 @@
-import { classStr } from '@/app/utils'
-import stylesConfig from './styles.json'
 import { saveStylesAction } from '@/app/actions/styles'
+import { classStr } from '@/app/utils'
+
+import stylesConfig from './styles.json'
 
 export type StyleConfig = typeof stylesConfig
 
@@ -10,7 +11,7 @@ export function loadStyles(): StyleConfig {
 
 export async function saveStyles(config: StyleConfig): Promise<void> {
   const result = await saveStylesAction(config)
-  
+
   if (!result.success) {
     throw new Error(result.error || 'Failed to save styles')
   }

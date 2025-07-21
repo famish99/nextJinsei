@@ -4,12 +4,22 @@ import Script from 'next/script'
 
 import './globals.css'
 
-export function generateMetadata(): Metadata {
-  const {
-    header: { firstName, lastName },
-  } = getData()
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const data = await getData()
+    if (data?.header) {
+      const { firstName, lastName } = data.header
+      return {
+        title: `${firstName} ${lastName} — Resume`,
+        description: 'Automated Resume Generator',
+      }
+    }
+  } catch (error) {
+    console.error('Failed to generate metadata:', error)
+  }
+
   return {
-    title: `${firstName} ${lastName} — Resume`,
+    title: 'Loading resume...',
     description: 'Automated Resume Generator',
   }
 }

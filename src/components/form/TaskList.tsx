@@ -1,6 +1,6 @@
 import { Button } from '@/components/form/Button'
 import { useEffect, useRef } from 'react'
-import { createSwapy } from 'swapy'
+import { Swapy, createSwapy } from 'swapy'
 
 interface TaskListProps {
   tasks: string[]
@@ -9,7 +9,7 @@ interface TaskListProps {
 
 export function TaskList({ tasks, onChange }: TaskListProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const swapyRef = useRef<any>(null)
+  const swapyRef = useRef<Swapy>(null)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -63,8 +63,8 @@ export function TaskList({ tasks, onChange }: TaskListProps) {
       </div>
       <div ref={containerRef} className="space-y-2">
         {tasks.map((task, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             data-swapy-slot={`task-${index}`}
             className="flex gap-2 cursor-move"
           >

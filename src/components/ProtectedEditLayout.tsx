@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { getCurrentUser, signOut } from 'aws-amplify/auth'
-import { useRouter } from 'next/navigation'
+import { Button } from '@/components/form/Button'
 import { BackToResumeLink } from '@/components/navigation/BackToResumeLink'
 import { EditNavigation } from '@/components/navigation/EditNavigation'
-import { Button } from '@/components/form/Button'
+import { getCurrentUser, signOut } from 'aws-amplify/auth'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 interface ProtectedEditLayoutProps {
   children: React.ReactNode
@@ -55,10 +55,7 @@ export function ProtectedEditLayout({ children }: ProtectedEditLayoutProps) {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Edit Resume</h1>
         <div className="flex gap-4 items-center">
-          <Button 
-            onClick={handleSignOut}
-            variant="secondary"
-          >
+          <Button onClick={handleSignOut} variant="secondary">
             Sign Out
           </Button>
           <BackToResumeLink />

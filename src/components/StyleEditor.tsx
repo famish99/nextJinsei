@@ -1,11 +1,14 @@
 'use client'
 
+import { type StyleConfig, loadStyles, saveStyles } from '@/app/config/styles'
 import { useState } from 'react'
-import { loadStyles, saveStyles, type StyleConfig } from '@/app/config/styles'
 
 export function StyleEditor() {
   const [config, setConfig] = useState<StyleConfig>(loadStyles())
-  const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({
+  const [status, setStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({
     type: null,
     message: '',
   })
@@ -13,19 +16,30 @@ export function StyleEditor() {
   const handleSave = async () => {
     try {
       await saveStyles(config)
-      setStatus({ type: 'success', message: 'Styles saved successfully! Refresh the page to see changes.' })
+      setStatus({
+        type: 'success',
+        message: 'Styles saved successfully! Refresh the page to see changes.',
+      })
     } catch (error) {
-      setStatus({ type: 'error', message: error instanceof Error ? error.message : 'Failed to save styles' })
+      setStatus({
+        type: 'error',
+        message:
+          error instanceof Error ? error.message : 'Failed to save styles',
+      })
     }
   }
 
-  const handleChange = (section: keyof StyleConfig, key: string, value: any) => {
-    setConfig(prev => ({
+  const handleChange = (
+    section: keyof StyleConfig,
+    key: string,
+    value: string,
+  ) => {
+    setConfig((prev) => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [key]: value
-      }
+        [key]: value,
+      },
     }))
   }
 
@@ -44,7 +58,9 @@ export function StyleEditor() {
       {status.type && (
         <div
           className={`p-4 rounded ${
-            status.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            status.type === 'success'
+              ? 'bg-green-100 text-green-700'
+              : 'bg-red-100 text-red-700'
           }`}
         >
           {status.message}
@@ -71,10 +87,10 @@ export function StyleEditor() {
                           <input
                             type="text"
                             value={subValue as string}
-                            onChange={(e) => 
+                            onChange={(e) =>
                               handleChange(section as keyof StyleConfig, key, {
                                 ...value,
-                                [subKey]: e.target.value
+                                [subKey]: e.target.value,
                               })
                             }
                             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -86,7 +102,13 @@ export function StyleEditor() {
                     <input
                       type="text"
                       value={value as string}
-                      onChange={(e) => handleChange(section as keyof StyleConfig, key, e.target.value)}
+                      onChange={(e) =>
+                        handleChange(
+                          section as keyof StyleConfig,
+                          key,
+                          e.target.value,
+                        )
+                      }
                       className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   )}
@@ -98,4 +120,4 @@ export function StyleEditor() {
       </div>
     </div>
   )
-} 
+}

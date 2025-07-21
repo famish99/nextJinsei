@@ -4,27 +4,21 @@ import { saveProjects } from '@/app/actions/projects'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
+import { ProjectItem } from '@/types/resume'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { createSwapy } from 'swapy'
-
-interface ProjectItem {
-  title: string
-  stack: string
-  description: string
-  link: string
-}
+import { Swapy, createSwapy } from 'swapy'
 
 interface ProjectsEditorProps {
-  projects: ProjectItem[]
+  projects: ProjectItem[] | null
 }
 
 export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
-  const [items, setItems] = useState<ProjectItem[]>(projects)
+  const [items, setItems] = useState<ProjectItem[]>(projects || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
-  const swapyRef = useRef<any>(null)
+  const swapyRef = useRef<Swapy>(null)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -44,7 +38,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
             return items[index]
           }
           // Find the project by title
-          return items.find(p => p.title === item) || items[0]
+          return items.find((p) => p.title === item) || items[0]
         })
         setItems(reorderedItems)
       })
@@ -110,7 +104,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
 
       <div ref={containerRef} className="space-y-4">
         {items.map((item, index) => (
-          <div 
+          <div
             key={index}
             data-swapy-slot={`project-${index}`}
             className="space-y-4 p-4 border rounded-lg cursor-move"
@@ -153,7 +147,9 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
                 label="Description"
                 name={`${index}.description`}
                 value={item.description}
-                onChange={(e) => updateField(index, 'description', e.target.value)}
+                onChange={(e) =>
+                  updateField(index, 'description', e.target.value)
+                }
                 required
                 placeholder="Brief project description"
               />

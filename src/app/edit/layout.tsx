@@ -1,12 +1,15 @@
 // import { AmplifyProvider } from '@/components/AmplifyProvider'
 'use client'
-import React from 'react';
-import { ProtectedEditLayout } from '@/components/ProtectedEditLayout'
-import {Authenticator} from "@aws-amplify/ui-react";
 
+import { ProtectedEditLayout } from '@/components/ProtectedEditLayout'
+import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
-import {Amplify} from "aws-amplify";
+import { Amplify } from 'aws-amplify'
+import React from 'react'
+
 import outputs from '../../../amplify_outputs.json'
+
+// import { AmplifyProvider } from '@/components/AmplifyProvider'
 
 Amplify.configure(outputs)
 
@@ -18,9 +21,7 @@ export default function EditLayout({
   return (
     <React.StrictMode>
       <Authenticator hideSignUp>
-        <ProtectedEditLayout>
-          {children}
-        </ProtectedEditLayout>
+        <ProtectedEditLayout>{children}</ProtectedEditLayout>
       </Authenticator>
     </React.StrictMode>
   )

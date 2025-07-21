@@ -14,11 +14,11 @@ interface ExperienceFormData extends ExperienceItem {
 }
 
 interface ExperienceEditorProps {
-  experience: ExperienceItem[]
+  experience: ExperienceItem[] | null
 }
 
 export function ExperienceEditor({ experience }: ExperienceEditorProps) {
-  const [items, setItems] = useState<ExperienceFormData[]>(experience)
+  const [items, setItems] = useState<ExperienceFormData[]>(experience || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 

@@ -6,7 +6,7 @@ import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { createSwapy } from 'swapy'
+import { Swapy, createSwapy } from 'swapy'
 
 interface SkillSection {
   title: string
@@ -21,14 +21,14 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
   const [sections, setSections] = useState<SkillSection[]>(skills)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  const swapyInstancesRef = useRef<any[]>([])
+  const swapyInstancesRef = useRef<Swapy[]>([])
 
   useEffect(() => {
     // Initialize swapy for each skills container
     const skillContainers = document.querySelectorAll('.skills-container')
-    
+
     // Cleanup previous instances
-    swapyInstancesRef.current.forEach(instance => instance.destroy?.())
+    swapyInstancesRef.current.forEach((instance) => instance.destroy?.())
     swapyInstancesRef.current = []
 
     skillContainers.forEach((container, sectionIndex) => {
@@ -45,18 +45,18 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
 
     // Cleanup on unmount
     return () => {
-      swapyInstancesRef.current.forEach(instance => instance.destroy?.())
+      swapyInstancesRef.current.forEach((instance) => instance.destroy?.())
       swapyInstancesRef.current = []
     }
   }, [sections.length]) // Only recreate when number of sections changes
 
   const addSection = () => {
     setSections([
-      { 
-        title: '', 
-        items: ['']
-      }, 
-      ...sections
+      {
+        title: '',
+        items: [''],
+      },
+      ...sections,
     ])
   }
 
@@ -120,16 +120,15 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
 
       <div className="space-y-4">
         {sections.map((section, sectionIndex) => (
-          <div 
-            key={sectionIndex}
-            className="space-y-4 p-4 border rounded-lg"
-          >
+          <div key={sectionIndex} className="space-y-4 p-4 border rounded-lg">
             <div className="flex justify-between items-start">
               <FormInput
                 label="Section Title"
                 name={`${sectionIndex}.title`}
                 value={section.title}
-                onChange={(e) => updateSectionTitle(sectionIndex, e.target.value)}
+                onChange={(e) =>
+                  updateSectionTitle(sectionIndex, e.target.value)
+                }
                 required
                 className="flex-grow"
               />
@@ -146,7 +145,7 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
 
             <div className="skills-container space-y-2">
               {section.items.map((item, itemIndex) => (
-                <div 
+                <div
                   key={itemIndex}
                   data-swapy-slot={`skill-${sectionIndex}-${itemIndex}`}
                   className="flex gap-2 cursor-move"

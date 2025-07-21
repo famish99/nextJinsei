@@ -1,10 +1,10 @@
-import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { type ClientSchema, a, defineData } from '@aws-amplify/backend'
 
 const schema = a.schema({
   Phone: a.customType({
-    countryCode: a.string(),
-    raw: a.string(),
-    formatted: a.string(),
+    countryCode: a.string().required(),
+    raw: a.string().required(),
+    formatted: a.string().required(),
   }),
 
   Header: a.customType({
@@ -15,14 +15,19 @@ const schema = a.schema({
 
   Contacts: a.customType({
     email: a.string().required(),
-    phone: a.ref('Phone'),
-    linkedin: a.string(),
+    phone: a.ref('Phone').required(),
+    linkedin: a.string().required(),
     github: a.string(),
+  }),
+
+  ProfileItem: a.customType({
+    text: a.string().required(),
+    type: a.string(),
   }),
 
   Skill: a.customType({
     title: a.string().required(),
-    items: a.string().array().required(),
+    items: a.string().required().array().required(),
   }),
 
   Experience: a.customType({
@@ -31,12 +36,12 @@ const schema = a.schema({
     location: a.string().required(),
     startDate: a.string().required(),
     endDate: a.string(),
-    tasks: a.string().array().required(),
+    tasks: a.string().required().array().required(),
   }),
 
   Education: a.customType({
     institution: a.string().required(),
-    location: a.string().required(),
+    location: a.string(),
     startDate: a.string().required(),
     endDate: a.string(),
     degree: a.string().required(),
@@ -45,7 +50,7 @@ const schema = a.schema({
   Project: a.customType({
     title: a.string().required(),
     description: a.string().required(),
-    link: a.string(),
+    link: a.string().required(),
     stack: a.string().required(),
   }),
 
@@ -122,18 +127,16 @@ const schema = a.schema({
   Resume: a
     .model({
       userId: a.string().required(),
-      header: a.ref('Header'),
-      contacts: a.ref('Contacts'),
-      profile: a.string().array(),
-      skills: a.ref('Skill').array(),
-      experience: a.ref('Experience').array(),
-      education: a.ref('Education').array(),
-      projects: a.ref('Project').array(),
+      header: a.ref('Header').required(),
+      contacts: a.ref('Contacts').required(),
+      profile: a.ref('ProfileItem').required().array().required(),
+      skills: a.ref('Skill').required().array().required(),
+      experience: a.ref('Experience').required().array().required(),
+      education: a.ref('Education').required().array().required(),
+      projects: a.ref('Project').required().array(),
+      userProfile: a.hasOne('UserProfile', 'resumeId'),
     })
-    .authorization((allow) => [
-      allow.owner(),
-      allow.guest().to(['read'])
-    ]),
+    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
 
   Styles: a
     .model({
@@ -141,21 +144,29 @@ const schema = a.schema({
       colors: a.ref('Colors').required(),
       spacing: a.ref('Spacing').required(),
       typography: a.ref('Typography').required(),
+      userProfile: a.hasOne('UserProfile', 'stylesId'),
     })
-    .authorization((allow) => [
-      allow.owner(),
-      allow.guest().to(['read'])
-    ]),
-});
+    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
 
-export type Schema = ClientSchema<typeof schema>;
+  UserProfile: a
+    .model({
+      userId: a.string().required(),
+      resumeId: a.id().required(),
+      stylesId: a.id(),
+      resume: a.belongsTo('Resume', 'resumeId'),
+      styles: a.belongsTo('Styles', 'stylesId'),
+    })
+    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
+})
+
+export type Schema = ClientSchema<typeof schema>
 
 export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: 'identityPool',
   },
-});
+})
 
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a

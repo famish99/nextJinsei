@@ -4,16 +4,9 @@ import { saveEducation } from '@/app/actions/education'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
+import { EducationData } from '@/types/resume'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-interface EducationData {
-  institution: string
-  location?: string
-  startDate: string
-  endDate: string
-  degree: string
-}
 
 interface EducationEditorProps {
   education: EducationData[]
