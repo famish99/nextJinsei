@@ -146,7 +146,7 @@ const schema = a.schema({
       typography: a.ref('Typography').required(),
       userProfile: a.hasOne('UserProfile', 'stylesId'),
     })
-    .authorization((allow) => [allow.owner(), allow.guest()]),
+    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
 
   UserProfile: a
     .model({

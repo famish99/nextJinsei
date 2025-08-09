@@ -95,3 +95,58 @@ export const UpdateStylesMutation = `
     }
   }
 `
+
+export const UpdateResumeMutation = `
+  mutation UpdateResume($input: UpdateResumeInput!) {
+    updateResume(input: $input) {
+      id
+      userId
+      header {
+        firstName
+        lastName
+        title
+      }
+      contacts {
+        email
+        phone {
+          countryCode
+          raw
+          formatted
+        }
+        linkedin
+        github
+      }
+      profile {
+        text
+        type
+      }
+      skills {
+        title
+        items
+      }
+      experience {
+        employer
+        title
+        location
+        startDate
+        endDate
+        tasks
+      }
+      education {
+        institution
+        location
+        startDate
+        endDate
+        degree
+      }
+      projects {
+        title
+        description
+        link
+        stack
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`

@@ -42,7 +42,6 @@ async function fetchData(): Promise<ResumeData> {
 export const getData = cache(fetchData)
 
 export async function saveData(data: ResumeData) {
-
   const cookieBasedClient = generateServerClientUsingCookies<Schema>({
     config: outputs,
     cookies,
@@ -54,17 +53,19 @@ export async function saveData(data: ResumeData) {
   }
 
   // Get user profile by ID
-  const { data: userProfile } = await cookieBasedClient.models.UserProfile.get({
+  const userProfileResult = await cookieBasedClient.models.UserProfile.get({
     id: userProfileId,
   })
 
-  if (!userProfile) {
+  if (!userProfileResult.data) {
     throw new Error(`User profile not found: ${userProfileId}`)
   }
 
+  const userProfile = userProfileResult.data
+
   if (userProfile.resumeId) {
     // Update existing resume
-    await cookieBasedClient.models.Resume.update({
+    const updateResult = await cookieBasedClient.models.Resume.update({
       id: userProfile.resumeId,
       header: data.header,
       contacts: data.contacts,
@@ -74,9 +75,13 @@ export async function saveData(data: ResumeData) {
       education: data.education,
       projects: data.projects,
     })
+    
+    if (updateResult.errors && updateResult.errors.length > 0) {
+      throw new Error('Failed to update resume: ' + JSON.stringify(updateResult.errors))
+    }
   } else {
     // Create new resume
-    const { data: newResume } = await cookieBasedClient.models.Resume.create({
+    const createResult = await cookieBasedClient.models.Resume.create({
       userId: userProfile.userId,
       header: data.header,
       contacts: data.contacts,
@@ -86,13 +91,21 @@ export async function saveData(data: ResumeData) {
       education: data.education,
       projects: data.projects,
     })
+    
+    if (createResult.errors && createResult.errors.length > 0) {
+      throw new Error('Failed to create resume: ' + JSON.stringify(createResult.errors))
+    }
 
-    if (newResume) {
+    if (createResult.data) {
       // Update user profile with new resume ID
-      await cookieBasedClient.models.UserProfile.update({
+      const profileUpdateResult = await cookieBasedClient.models.UserProfile.update({
         id: userProfile.id,
-        resumeId: newResume.id,
+        resumeId: createResult.data.id,
       })
+      
+      if (profileUpdateResult.errors && profileUpdateResult.errors.length > 0) {
+        throw new Error('Failed to update user profile: ' + JSON.stringify(profileUpdateResult.errors))
+      }
     }
   }
 }
