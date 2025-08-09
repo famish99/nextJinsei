@@ -42,3 +42,8 @@ next-env.d.ts
 # Generated files
 *.js.map
 *.css.map
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*

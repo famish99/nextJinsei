@@ -4,16 +4,9 @@ import { saveEducation } from '@/app/actions/education'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
+import { EducationData } from '@/types/resume'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-interface EducationData {
-  institution: string
-  location?: string
-  startDate: string
-  endDate: string
-  degree: string
-}
 
 interface EducationEditorProps {
   education: EducationData[]
@@ -26,13 +19,13 @@ export function EducationEditor({ education }: EducationEditorProps) {
 
   const addItem = () => {
     setItems([
-      ...items,
       {
         institution: '',
         startDate: '',
         endDate: '',
         degree: '',
       },
+      ...items,
     ])
   }
 
@@ -67,6 +60,15 @@ export function EducationEditor({ education }: EducationEditorProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
       {error && <ErrorBanner message={error} />}
+
+      <div className="flex gap-4">
+        <Button type="button" variant="secondary" onClick={addItem}>
+          Add Education
+        </Button>
+        <Button type="submit" variant="primary">
+          Save Changes
+        </Button>
+      </div>
 
       {items.map((item, index) => (
         <div key={index} className="space-y-4 p-4 border rounded-lg">
@@ -128,15 +130,6 @@ export function EducationEditor({ education }: EducationEditorProps) {
           />
         </div>
       ))}
-
-      <div className="flex gap-4">
-        <Button type="button" variant="secondary" onClick={addItem}>
-          Add Education
-        </Button>
-        <Button type="submit" variant="primary">
-          Save Changes
-        </Button>
-      </div>
     </form>
   )
 }

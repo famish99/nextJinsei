@@ -11,6 +11,7 @@ const sections = [
   { name: 'Skills', path: '/edit/skills' },
   { name: 'Projects', path: '/edit/projects' },
   { name: 'Education', path: '/edit/education' },
+  { name: 'Styles', path: '/edit/styles' },
 ]
 
 export function EditNavigation() {

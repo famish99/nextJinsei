@@ -8,8 +8,8 @@ import { Profile } from '@/components/Profile'
 import { Projects } from '@/components/Projects'
 import { Skills } from '@/components/Skills'
 
-export default function Home() {
-  const { projects } = getData()
+export default async function Home() {
+  const { projects } = await getData()
   return (
     <main className={`${firago.className} hyphens-manual`}>
       <div

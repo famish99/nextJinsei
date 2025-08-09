@@ -1,10 +1,10 @@
-export type HeaderData = {
+export interface HeaderData {
   firstName: string
   lastName: string
   title: string
 }
 
-export type ContactData = {
+export interface ContactData {
   email: string
   phone: {
     countryCode: string
@@ -12,49 +12,49 @@ export type ContactData = {
     formatted: string
   }
   linkedin: string
-  github?: string
+  github?: string | null
 }
 
-export type ProfileItem = {
+export interface ProfileItem {
   text: string
-  type?: string
+  type?: string | null
 }
 
-export type ExperienceItem = {
+export interface ExperienceItem {
   employer: string
   title: string
   location: string
   startDate: string
-  endDate: string
+  endDate?: string | null
   tasks: string[]
 }
 
-export type SkillSection = {
+export interface SkillSection {
   title: string
   items: string[]
 }
 
-export type ProjectItem = {
+export interface ProjectItem {
   title: string
   stack: string
   description: string
   link: string
 }
 
-export type EducationData = {
+export interface EducationData {
   institution: string
-  location?: string
+  location?: string | null
   startDate: string
-  endDate: string
+  endDate?: string | null
   degree: string
 }
 
-export type ResumeData = {
+export interface ResumeData {
   header: HeaderData
   contacts: ContactData
   profile: ProfileItem[]
   experience: ExperienceItem[]
   skills: SkillSection[]
-  projects?: ProjectItem[]
+  projects?: ProjectItem[] | null
   education: EducationData[]
 }
