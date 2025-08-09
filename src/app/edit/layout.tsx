@@ -1,4 +1,3 @@
-// import { AmplifyProvider } from '@/components/AmplifyProvider'
 'use client'
 
 import { ProtectedEditLayout } from '@/components/ProtectedEditLayout'
@@ -8,8 +7,6 @@ import { Amplify } from 'aws-amplify'
 import React from 'react'
 
 import outputs from '../../../amplify_outputs.json'
-
-// import { AmplifyProvider } from '@/components/AmplifyProvider'
 
 Amplify.configure(outputs)
 
