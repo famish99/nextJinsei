@@ -1,7 +1,7 @@
 'use client'
 
 import { saveStyles } from '@/app/config/styles'
-import { StyleConfig } from '@/app/styleConfig'
+import { EditableStyleSection, StyleConfig } from '@/app/styleConfig'
 import { useState } from 'react'
 
 interface StyleEditorProps {
@@ -39,7 +39,7 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
   }
 
   const handleChange = (
-    section: keyof StyleConfig,
+    section: EditableStyleSection,
     key: string,
     value: string | object,
   ) => {
@@ -47,10 +47,10 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
     setConfig({
       ...config,
       [section]: {
-        ...(config[section] as Record<string, any>),
+        ...(config[section] as Record<string, string | object>),
         [key]: value,
       },
-    } as StyleConfig)
+    })
   }
 
   return (
@@ -108,11 +108,11 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
                                 value={subValue as string}
                                 onChange={(e) => {
                                   const updatedValue = {
-                                    ...(value as Record<string, any>),
+                                    ...(value as Record<string, string>),
                                     [subKey]: e.target.value,
                                   }
                                   handleChange(
-                                    section as keyof StyleConfig,
+                                    section as EditableStyleSection,
                                     key,
                                     updatedValue,
                                   )
@@ -128,7 +128,7 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
                           value={value as string}
                           onChange={(e) =>
                             handleChange(
-                              section as keyof StyleConfig,
+                              section as EditableStyleSection,
                               key,
                               e.target.value,
                             )

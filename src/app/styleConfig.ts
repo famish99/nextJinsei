@@ -4,6 +4,8 @@ export type StyleConfig = Schema['Styles']['type']
 
 export type StyleQueryResult = { getStyles: StyleConfig }
 
+export type EditableStyleSection = 'colors' | 'spacing' | 'typography'
+
 export const GetStylesQuery = `
     query GetStyles($id: ID!) {
       getStyles(id: $id) {

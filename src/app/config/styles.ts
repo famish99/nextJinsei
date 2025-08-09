@@ -80,7 +80,7 @@ export async function saveStyles(config: StyleConfig): Promise<void> {
           typography: config.typography,
         }
       }
-    }) as GraphQLResult<any>
+    }) as GraphQLResult<{ updateStyles: StyleConfig }>
     
     if (updateResult.errors && updateResult.errors.length > 0) {
       throw new Error('Failed to update styles: ' + JSON.stringify(updateResult.errors))
