@@ -1,8 +1,9 @@
 'use server'
 
-import type { StyleConfig } from '@/app/config/styles'
 import { writeFile } from 'fs/promises'
 import path from 'path'
+import { StyleConfig } from '@/app/styleConfig'
+import { loadStyles } from '@/app/config/styles'
 
 export async function saveStylesAction(
   styles: StyleConfig,
@@ -35,6 +36,23 @@ export async function saveStylesAction(
     return {
       success: false,
       error: 'Failed to save styles',
+    }
+  }
+}
+
+export async function loadStylesAction(): Promise<{
+  success: boolean
+  data?: StyleConfig
+  error?: string
+}> {
+  try {
+    const styles = await loadStyles()
+    return { success: true, data: styles }
+  } catch (error) {
+    console.error('Error loading styles:', error)
+    return {
+      success: false,
+      error: 'Failed to load styles',
     }
   }
 }

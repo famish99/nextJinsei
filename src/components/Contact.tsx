@@ -1,9 +1,10 @@
-import { CONTACTS_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedContactsSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 
 export async function Contact() {
   try {
     const data = await getData()
+    const style = await getCachedContactsSectionStyle()
 
     if (!data?.contacts) {
       return (
@@ -77,10 +78,7 @@ export async function Contact() {
   } catch (error) {
     console.error('Failed to load contact:', error)
     return (
-      <section className={style.sectionMargin} id="contact">
-        <h2 className={style.header}>CONTACT</h2>
-        <div>Error loading contact information</div>
-      </section>
+      <div>Error loading contact information</div>
     )
   }
 }

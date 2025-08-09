@@ -1,10 +1,11 @@
-import { PROFILE_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedProfileSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 import { classStr } from '@/app/utils'
 
 export async function Profile() {
   try {
     const data = await getData()
+    const style = await getCachedProfileSectionStyle()
 
     if (!data?.profile) {
       return (
@@ -40,10 +41,7 @@ export async function Profile() {
   } catch (error) {
     console.error('Failed to load profile:', error)
     return (
-      <section className={style.sectionSpacing} id="profile">
-        <h2 className={style.header}>PROFILE</h2>
-        <div>Error loading profile</div>
-      </section>
+      <div>Error loading profile</div>
     )
   }
 }

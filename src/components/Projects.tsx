@@ -1,10 +1,11 @@
-import { PROJECT_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedProjectSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 import { classStr } from '@/app/utils'
 
 export const Projects = async () => {
   try {
     const data = await getData()
+    const style = await getCachedProjectSectionStyle()
 
     if (!data?.projects) {
       return (
@@ -50,10 +51,7 @@ export const Projects = async () => {
   } catch (error) {
     console.error('Failed to load projects:', error)
     return (
-      <section className={style.sectionSpacing} id="projects">
-        <h2 className={style.header}>TECHNICAL PROJECTS</h2>
-        <div>Error loading projects</div>
-      </section>
+      <div>Error loading projects</div>
     )
   }
 }

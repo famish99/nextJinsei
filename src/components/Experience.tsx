@@ -1,10 +1,11 @@
-import { EXPERIENCE_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedExperienceSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 import { classStr } from '@/app/utils'
 
 export async function Experience() {
   try {
     const data = await getData()
+    const style = await getCachedExperienceSectionStyle()
 
     if (!data?.experience) {
       return (
@@ -77,10 +78,7 @@ export async function Experience() {
   } catch (error) {
     console.error('Failed to load experience:', error)
     return (
-      <section className={style.sectionSpacing} id="experience">
-        <h2 className={style.header}>EXPERIENCE</h2>
-        <div>Error loading experience</div>
-      </section>
+      <div>Error loading experience</div>
     )
   }
 }

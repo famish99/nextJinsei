@@ -6,12 +6,13 @@ import { cache } from 'react'
 import type { Schema } from '../../amplify/data/resource'
 import outputs from '../../amplify_outputs.json'
 
-const cookieBasedClient = generateServerClientUsingCookies<Schema>({
-  config: outputs,
-  cookies,
-})
-
 async function fetchData(): Promise<ResumeData> {
+
+  const cookieBasedClient = generateServerClientUsingCookies<Schema>({
+    config: outputs,
+    cookies,
+  })
+
   const userProfileId = process.env.USER_PROFILE_ID
 
   if (!userProfileId) {
@@ -41,6 +42,11 @@ async function fetchData(): Promise<ResumeData> {
 export const getData = cache(fetchData)
 
 export async function saveData(data: ResumeData) {
+
+  const cookieBasedClient = generateServerClientUsingCookies<Schema>({
+    config: outputs,
+    cookies,
+  })
   const userProfileId = process.env.USER_PROFILE_ID
 
   if (!userProfileId) {

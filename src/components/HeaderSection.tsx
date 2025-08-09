@@ -1,4 +1,4 @@
-import { HEADER_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedHeaderSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 
 import { EditableTitle } from './EditableTitle'
@@ -6,6 +6,7 @@ import { EditableTitle } from './EditableTitle'
 export async function HeaderSection() {
   try {
     const data = await getData()
+    const style = await getCachedHeaderSectionStyle()
 
     if (!data?.header) {
       return (

@@ -1,10 +1,15 @@
 'use client'
 
-import { type StyleConfig, loadStyles, saveStyles } from '@/app/config/styles'
+import { saveStyles } from '@/app/config/styles'
+import { StyleConfig } from '@/app/styleConfig'
 import { useState } from 'react'
 
-export function StyleEditor() {
-  const [config, setConfig] = useState<StyleConfig>(loadStyles())
+interface StyleEditorProps {
+  styleConfig: StyleConfig
+}
+
+export function StyleEditor({ styleConfig }: StyleEditorProps) {
+  const [config, setConfig] = useState<StyleConfig>(styleConfig)
   const [status, setStatus] = useState<{
     type: 'success' | 'error' | null
     message: string
@@ -12,6 +17,10 @@ export function StyleEditor() {
     type: null,
     message: '',
   })
+
+  if (!config) {
+    return <div>Loading config</div>
+  }
 
   const handleSave = async () => {
     try {
@@ -32,15 +41,16 @@ export function StyleEditor() {
   const handleChange = (
     section: keyof StyleConfig,
     key: string,
-    value: string,
+    value: string | object,
   ) => {
-    setConfig((prev) => ({
-      ...prev,
+    if (!config) return
+    setConfig({
+      ...config,
       [section]: {
-        ...prev[section],
+        ...(config[section] as Record<string, any>),
         [key]: value,
       },
-    }))
+    } as StyleConfig)
   }
 
   return (
@@ -68,55 +78,69 @@ export function StyleEditor() {
       )}
 
       <div className="space-y-8">
-        {Object.entries(config).map(([section, values]) => (
-          <div key={section} className="space-y-4">
-            <h3 className="text-lg font-medium capitalize">{section}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(values).map(([key, value]) => (
-                <div key={key} className="space-y-2">
-                  <label className="block text-sm font-medium capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                  </label>
-                  {typeof value === 'object' ? (
-                    <div className="pl-4 space-y-4">
-                      {Object.entries(value).map(([subKey, subValue]) => (
-                        <div key={subKey} className="space-y-2">
-                          <label className="block text-sm font-medium capitalize">
-                            {subKey.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                          </label>
-                          <input
-                            type="text"
-                            value={subValue as string}
-                            onChange={(e) =>
-                              handleChange(section as keyof StyleConfig, key, {
-                                ...value,
-                                [subKey]: e.target.value,
-                              })
-                            }
-                            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
+        {Object.entries(config)
+          .filter(
+            ([section]) =>
+              !['id', 'userId', 'createdAt', 'updatedAt'].includes(section),
+          )
+          .map(([section, values]) => (
+            <div key={section} className="space-y-4">
+              <h3 className="text-lg font-medium capitalize">{section}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {values &&
+                  typeof values === 'object' &&
+                  Object.entries(values).map(([key, value]) => (
+                    <div key={key} className="space-y-2">
+                      <label className="block text-sm font-medium capitalize">
+                        {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                      </label>
+                      {typeof value === 'object' ? (
+                        <div className="pl-4 space-y-4">
+                          {Object.entries(value).map(([subKey, subValue]) => (
+                            <div key={subKey} className="space-y-2">
+                              <label className="block text-sm font-medium capitalize">
+                                {subKey
+                                  .replace(/([A-Z])/g, ' $1')
+                                  .toLowerCase()}
+                              </label>
+                              <input
+                                type="text"
+                                value={subValue as string}
+                                onChange={(e) => {
+                                  const updatedValue = {
+                                    ...(value as Record<string, any>),
+                                    [subKey]: e.target.value,
+                                  }
+                                  handleChange(
+                                    section as keyof StyleConfig,
+                                    key,
+                                    updatedValue,
+                                  )
+                                }}
+                                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      ) : (
+                        <input
+                          type="text"
+                          value={value as string}
+                          onChange={(e) =>
+                            handleChange(
+                              section as keyof StyleConfig,
+                              key,
+                              e.target.value,
+                            )
+                          }
+                          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      )}
                     </div>
-                  ) : (
-                    <input
-                      type="text"
-                      value={value as string}
-                      onChange={(e) =>
-                        handleChange(
-                          section as keyof StyleConfig,
-                          key,
-                          e.target.value,
-                        )
-                      }
-                      className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  )}
-                </div>
-              ))}
+                  ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   )

@@ -146,13 +146,13 @@ const schema = a.schema({
       typography: a.ref('Typography').required(),
       userProfile: a.hasOne('UserProfile', 'stylesId'),
     })
-    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
+    .authorization((allow) => [allow.owner(), allow.guest()]),
 
   UserProfile: a
     .model({
       userId: a.string().required(),
       resumeId: a.id().required(),
-      stylesId: a.id(),
+      stylesId: a.id().required(),
       resume: a.belongsTo('Resume', 'resumeId'),
       styles: a.belongsTo('Styles', 'stylesId'),
     })

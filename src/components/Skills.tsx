@@ -1,10 +1,11 @@
-import { SKILL_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedSkillSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 import kebabCase from 'kebab-case'
 
 export const Skills = async () => {
   try {
     const data = await getData()
+    const style = await getCachedSkillSectionStyle()
 
     if (!data?.skills) {
       return (
@@ -46,10 +47,7 @@ export const Skills = async () => {
   } catch (error) {
     console.error('Failed to load skills:', error)
     return (
-      <section className={style.sectionSpacing} id="skills">
-        <h2 className={style.header}>SKILLS</h2>
-        <div>Error loading skills</div>
-      </section>
+      <div>Error loading skills</div>
     )
   }
 }

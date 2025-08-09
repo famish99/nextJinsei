@@ -1,9 +1,10 @@
-import { EDUCATION_SECTION_STYLE as style } from '@/app/constants'
+import { getCachedEducationSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
 
 export async function Education() {
   try {
     const data = await getData()
+    const style = await getCachedEducationSectionStyle()
 
     if (!data?.education) {
       return (
@@ -41,10 +42,7 @@ export async function Education() {
   } catch (error) {
     console.error('Failed to load education:', error)
     return (
-      <section className={style.sectionSpacing} id="education">
-        <h2 className={style.header}>EDUCATION</h2>
         <div>Error loading education</div>
-      </section>
     )
   }
 }
