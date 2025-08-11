@@ -7,11 +7,12 @@ import './globals.css'
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const data = await getData()
-    if (data?.header) {
-      const { firstName, lastName } = data.header
+    if (data?.header && data?.experience.length > 0) {
+      const { firstName, lastName, title } = data.header
+      const company = data.experience[0].employer
       return {
         title: `${firstName} ${lastName} — Resume`,
-        description: 'Automated Resume Generator',
+        description: `${title} at ${company}`,
       }
     }
   } catch (error) {
