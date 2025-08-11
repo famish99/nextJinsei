@@ -4,5 +4,10 @@ import { ProjectsEditor } from '@/components/editors/ProjectsEditor'
 export default async function EditProjectsPage() {
   const resumeData = await getData()
 
-  return <ProjectsEditor projects={resumeData.projects || []} resumeId={resumeData.id} />
+  return (
+    <ProjectsEditor
+      projects={resumeData.projects || []}
+      resumeId={resumeData.id}
+    />
+  )
 }

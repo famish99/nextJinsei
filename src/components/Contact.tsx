@@ -1,5 +1,5 @@
-import { getCachedContactsSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedContactsSectionStyle } from '@/app/styleData'
 
 export async function Contact() {
   try {
@@ -77,8 +77,6 @@ export async function Contact() {
     )
   } catch (error) {
     console.error('Failed to load contact:', error)
-    return (
-      <div>Error loading contact information</div>
-    )
+    return <div>Error loading contact information</div>
   }
 }

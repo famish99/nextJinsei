@@ -3,10 +3,7 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   purge: false,
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    './src/app/config/styles.json'
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './src/app/config/styles.json'],
   theme: {
     /* For Letter size */
     screens: {

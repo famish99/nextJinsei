@@ -14,7 +14,10 @@ interface ProjectsEditorProps {
   resumeId: string
 }
 
-export function ProjectsEditor({ projects = [], resumeId }: ProjectsEditorProps) {
+export function ProjectsEditor({
+  projects = [],
+  resumeId,
+}: ProjectsEditorProps) {
   const [items, setItems] = useState<ProjectItem[]>(projects || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()

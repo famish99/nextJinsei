@@ -3,7 +3,6 @@ import { getStyles } from '@/app/config/styles'
 import { StyleConfig } from '@/app/styleConfig'
 import { classStr } from '@/app/utils'
 
-
 export async function getSectionHeaderStyle(config?: StyleConfig) {
   const styles = config || (await getStyles())
   return [

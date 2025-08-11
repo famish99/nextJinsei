@@ -1,5 +1,5 @@
-import { getCachedEducationSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedEducationSectionStyle } from '@/app/styleData'
 
 export async function Education() {
   try {
@@ -41,8 +41,6 @@ export async function Education() {
     )
   } catch (error) {
     console.error('Failed to load education:', error)
-    return (
-        <div>Error loading education</div>
-    )
+    return <div>Error loading education</div>
   }
 }

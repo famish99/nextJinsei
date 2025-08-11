@@ -34,7 +34,9 @@ export async function saveResumeData(
 
   if (updateResult.errors && updateResult.errors.length > 0) {
     throw new Error(
-      'Failed to update resume: ' + JSON.stringify(updateResult.errors),
+      'Failed to update resume: ' +
+        JSON.stringify(updateResult.errors) +
+        JSON.stringify(fieldsToUpdate),
     )
   }
 

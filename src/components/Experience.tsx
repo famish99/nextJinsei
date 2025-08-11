@@ -1,5 +1,5 @@
-import { getCachedExperienceSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedExperienceSectionStyle } from '@/app/styleData'
 import { classStr } from '@/app/utils'
 
 export async function Experience() {
@@ -77,8 +77,6 @@ export async function Experience() {
     )
   } catch (error) {
     console.error('Failed to load experience:', error)
-    return (
-      <div>Error loading experience</div>
-    )
+    return <div>Error loading experience</div>
   }
 }

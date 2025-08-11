@@ -1,5 +1,5 @@
-import { getCachedProfileSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedProfileSectionStyle } from '@/app/styleData'
 import { classStr } from '@/app/utils'
 
 export async function Profile() {
@@ -40,8 +40,6 @@ export async function Profile() {
     )
   } catch (error) {
     console.error('Failed to load profile:', error)
-    return (
-      <div>Error loading profile</div>
-    )
+    return <div>Error loading profile</div>
   }
 }

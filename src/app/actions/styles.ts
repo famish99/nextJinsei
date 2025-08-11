@@ -1,7 +1,7 @@
 'use server'
 
-import { StyleConfig } from '@/app/styleConfig'
 import { loadStyles } from '@/app/config/styles'
+import { StyleConfig } from '@/app/styleConfig'
 
 export async function loadStylesAction(): Promise<{
   success: boolean

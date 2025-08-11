@@ -9,17 +9,16 @@ import { ExperienceItem } from '@/types/resume'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
-interface ExperienceFormData extends ExperienceItem {
-  isNew?: boolean
-}
-
 interface ExperienceEditorProps {
   experience: ExperienceItem[]
   resumeId: string
 }
 
-export function ExperienceEditor({ experience, resumeId }: ExperienceEditorProps) {
-  const [items, setItems] = useState<ExperienceFormData[]>(experience || [])
+export function ExperienceEditor({
+  experience,
+  resumeId,
+}: ExperienceEditorProps) {
+  const [items, setItems] = useState<ExperienceItem[]>(experience || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -32,7 +31,6 @@ export function ExperienceEditor({ experience, resumeId }: ExperienceEditorProps
         startDate: '',
         endDate: '',
         tasks: [''],
-        isNew: true,
       },
       ...items,
     ])

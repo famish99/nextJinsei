@@ -1,5 +1,5 @@
-import { getCachedHeaderSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedHeaderSectionStyle } from '@/app/styleData'
 
 import { EditableTitle } from './EditableTitle'
 

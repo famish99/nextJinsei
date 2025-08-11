@@ -2,8 +2,8 @@
 
 import { saveStyles } from '@/app/client/resumeData'
 import { EditableStyleSection, StyleConfig } from '@/app/styleConfig'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface StyleEditorProps {
   styleConfig: StyleConfig

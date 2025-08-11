@@ -1,16 +1,13 @@
 import {
-  getStyles,
-
-} from '@/app/config/styles'
-import { classStr } from '@/app/utils'
-import { cache } from 'react'
-import {
   getArrowStyle,
   getBaseTextStyle,
   getBulletStyle,
   getSectionHeaderStyle,
   getTitleTextStyle,
 } from '@/app/config/getSectionHeaderStyle'
+import { getStyles } from '@/app/config/styles'
+import { classStr } from '@/app/utils'
+import { cache } from 'react'
 
 export async function getHeaderSectionStyle() {
   const styles = await getStyles()

@@ -47,6 +47,5 @@ export async function loadStyles(): Promise<StyleConfig> {
   return data.getStyles
 }
 
-
 // Cache the loadStyles function to avoid repeated database calls
 export const getStyles = cache(loadStyles)

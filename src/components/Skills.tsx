@@ -1,5 +1,5 @@
-import { getCachedSkillSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedSkillSectionStyle } from '@/app/styleData'
 import kebabCase from 'kebab-case'
 
 export const Skills = async () => {
@@ -46,8 +46,6 @@ export const Skills = async () => {
     )
   } catch (error) {
     console.error('Failed to load skills:', error)
-    return (
-      <div>Error loading skills</div>
-    )
+    return <div>Error loading skills</div>
   }
 }

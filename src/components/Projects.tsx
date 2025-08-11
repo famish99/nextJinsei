@@ -1,5 +1,5 @@
-import { getCachedProjectSectionStyle } from '@/app/styleData'
 import { getData } from '@/app/resumeData'
+import { getCachedProjectSectionStyle } from '@/app/styleData'
 import { classStr } from '@/app/utils'
 
 export const Projects = async () => {
@@ -50,8 +50,6 @@ export const Projects = async () => {
     )
   } catch (error) {
     console.error('Failed to load projects:', error)
-    return (
-      <div>Error loading projects</div>
-    )
+    return <div>Error loading projects</div>
   }
 }
