@@ -1,6 +1,6 @@
 'use client'
 
-import { saveSkills } from '@/app/actions/skills'
+import { saveSkills } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
@@ -15,9 +15,10 @@ interface SkillSection {
 
 interface SkillsEditorProps {
   skills: SkillSection[]
+  resumeId: string
 }
 
-export function SkillsEditor({ skills }: SkillsEditorProps) {
+export function SkillsEditor({ skills, resumeId }: SkillsEditorProps) {
   const [sections, setSections] = useState<SkillSection[]>(skills)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -96,7 +97,7 @@ export function SkillsEditor({ skills }: SkillsEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveSkills(sections)
+    const result = await saveSkills(sections, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

@@ -156,6 +156,7 @@ const schema = a.schema({
       resume: a.belongsTo('Resume', 'resumeId'),
       styles: a.belongsTo('Styles', 'stylesId'),
     })
+    .secondaryIndexes((index) => [index('userId')])
     .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
 })
 

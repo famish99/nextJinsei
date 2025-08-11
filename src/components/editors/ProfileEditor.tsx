@@ -1,6 +1,6 @@
 'use client'
 
-import { saveProfile } from '@/app/actions/profile'
+import { saveProfile } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { ProfileItem } from '@/types/resume'
@@ -9,9 +9,10 @@ import { useState } from 'react'
 
 interface ProfileEditorProps {
   profile: ProfileItem[]
+  resumeId: string
 }
 
-export function ProfileEditor({ profile }: ProfileEditorProps) {
+export function ProfileEditor({ profile, resumeId }: ProfileEditorProps) {
   const [items, setItems] = useState<ProfileItem[]>(profile)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -44,7 +45,7 @@ export function ProfileEditor({ profile }: ProfileEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveProfile(items)
+    const result = await saveProfile(items, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

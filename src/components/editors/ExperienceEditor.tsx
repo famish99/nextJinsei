@@ -1,6 +1,6 @@
 'use client'
 
-import { saveExperience } from '@/app/actions/experience'
+import { saveExperience } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
@@ -14,10 +14,11 @@ interface ExperienceFormData extends ExperienceItem {
 }
 
 interface ExperienceEditorProps {
-  experience: ExperienceItem[] | null
+  experience: ExperienceItem[]
+  resumeId: string
 }
 
-export function ExperienceEditor({ experience }: ExperienceEditorProps) {
+export function ExperienceEditor({ experience, resumeId }: ExperienceEditorProps) {
   const [items, setItems] = useState<ExperienceFormData[]>(experience || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -66,7 +67,7 @@ export function ExperienceEditor({ experience }: ExperienceEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveExperience(items)
+    const result = await saveExperience(items, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

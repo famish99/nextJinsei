@@ -1,23 +1,19 @@
 'use client'
 
-import { saveHeader } from '@/app/actions/header'
+import { saveHeader } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
+import { HeaderData } from '@/types/resume'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-interface HeaderData {
-  firstName: string
-  lastName: string
-  title: string
-}
-
 interface HeaderEditorProps {
   header: HeaderData
+  resumeId: string
 }
 
-export function HeaderEditor({ header }: HeaderEditorProps) {
+export function HeaderEditor({ header, resumeId }: HeaderEditorProps) {
   const [formData, setFormData] = useState<HeaderData>(header)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -31,7 +27,7 @@ export function HeaderEditor({ header }: HeaderEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveHeader(formData)
+    const result = await saveHeader(formData, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

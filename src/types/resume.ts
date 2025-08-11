@@ -50,6 +50,7 @@ export interface EducationData {
 }
 
 export interface ResumeData {
+  id: string
   header: HeaderData
   contacts: ContactData
   profile: ProfileItem[]

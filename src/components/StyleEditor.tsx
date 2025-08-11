@@ -1,14 +1,16 @@
 'use client'
 
-import { saveStyles } from '@/app/config/styles'
+import { saveStyles } from '@/app/client/resumeData'
 import { EditableStyleSection, StyleConfig } from '@/app/styleConfig'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface StyleEditorProps {
   styleConfig: StyleConfig
 }
 
 export function StyleEditor({ styleConfig }: StyleEditorProps) {
+  const router = useRouter()
   const [config, setConfig] = useState<StyleConfig>(styleConfig)
   const [status, setStatus] = useState<{
     type: 'success' | 'error' | null
@@ -24,11 +26,15 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
 
   const handleSave = async () => {
     try {
-      await saveStyles(config)
-      setStatus({
-        type: 'success',
-        message: 'Styles saved successfully! Refresh the page to see changes.',
-      })
+      const result = await saveStyles(config)
+      if (result.success) {
+        router.push('/')
+      } else {
+        setStatus({
+          type: 'error',
+          message: result.error || 'Failed to save styles',
+        })
+      }
     } catch (error) {
       setStatus({
         type: 'error',
@@ -65,14 +71,8 @@ export function StyleEditor({ styleConfig }: StyleEditorProps) {
         </button>
       </div>
 
-      {status.type && (
-        <div
-          className={`p-4 rounded ${
-            status.type === 'success'
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
-          }`}
-        >
+      {status.type === 'error' && (
+        <div className="p-4 rounded bg-red-100 text-red-700">
           {status.message}
         </div>
       )}

@@ -1,6 +1,6 @@
 'use client'
 
-import { saveContact } from '@/app/actions/contact'
+import { saveContact } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
@@ -10,9 +10,10 @@ import { useState } from 'react'
 
 interface ContactEditorProps {
   contacts: ContactData
+  resumeId: string
 }
 
-export function ContactEditor({ contacts }: ContactEditorProps) {
+export function ContactEditor({ contacts, resumeId }: ContactEditorProps) {
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState<ContactData>(contacts)
   const router = useRouter()
@@ -38,7 +39,7 @@ export function ContactEditor({ contacts }: ContactEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveContact(formData)
+    const result = await saveContact(formData, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

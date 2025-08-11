@@ -1,6 +1,6 @@
 'use client'
 
-import { saveEducation } from '@/app/actions/education'
+import { saveEducation } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
@@ -10,9 +10,10 @@ import { useState } from 'react'
 
 interface EducationEditorProps {
   education: EducationData[]
+  resumeId: string
 }
 
-export function EducationEditor({ education }: EducationEditorProps) {
+export function EducationEditor({ education, resumeId }: EducationEditorProps) {
   const [items, setItems] = useState<EducationData[]>(education)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -48,7 +49,7 @@ export function EducationEditor({ education }: EducationEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveEducation(items)
+    const result = await saveEducation(items, resumeId)
     if (result.error) {
       setError(result.error)
     } else {

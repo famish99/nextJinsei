@@ -1,6 +1,6 @@
 'use client'
 
-import { saveProjects } from '@/app/actions/projects'
+import { saveProjects } from '@/app/client/resumeData'
 import { Button } from '@/components/form/Button'
 import { ErrorBanner } from '@/components/form/ErrorBanner'
 import { FormInput } from '@/components/form/FormInput'
@@ -11,9 +11,10 @@ import { Swapy, createSwapy } from 'swapy'
 
 interface ProjectsEditorProps {
   projects: ProjectItem[] | null
+  resumeId: string
 }
 
-export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
+export function ProjectsEditor({ projects = [], resumeId }: ProjectsEditorProps) {
   const [items, setItems] = useState<ProjectItem[]>(projects || [])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -80,7 +81,7 @@ export function ProjectsEditor({ projects = [] }: ProjectsEditorProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await saveProjects(items)
+    const result = await saveProjects(items, resumeId)
     if (result.error) {
       setError(result.error)
     } else {
