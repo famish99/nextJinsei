@@ -1,0 +1,28 @@
+{
+  "id": "",
+  "contacts": {
+    "email": "",
+    "github": "",
+    "linkedin": "",
+    "phone": {
+      "countryCode": "",
+      "formatted": "",
+      "raw": ""
+    }
+  },
+  "createdAt": "",
+  "education": [],
+  "experience": [],
+  "header": {
+    "firstName": "",
+    "lastName": "",
+    "title": ""
+  },
+  "owner": "",
+  "profile": [],
+  "projects": [],
+  "skills": [],
+  "updatedAt": "",
+  "userId": "",
+  "__typename": "Resume"
+}

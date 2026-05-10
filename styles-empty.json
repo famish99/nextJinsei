@@ -1,0 +1,51 @@
+{
+  "colors": {
+    "primary": "",
+    "text": {
+      "base": "",
+      "highlight": "",
+      "lowlight": "",
+      "arrow": ""
+    },
+    "background": {
+      "skill": ""
+    }
+  },
+  "spacing": {
+    "section": {
+      "base": "",
+      "margin": "",
+      "text": ""
+    },
+    "subsection": "",
+    "list": {
+      "horizontal": "",
+      "item": ""
+    },
+    "items": {
+      "base": "",
+      "compact": ""
+    },
+    "description": "",
+    "subtitle": ""
+  },
+  "typography": {
+    "tracking": {
+      "section": ""
+    },
+    "leading": {
+      "base": "",
+      "title": ""
+    },
+    "size": {
+      "base": "",
+      "section": "",
+      "title": "",
+      "small": ""
+    },
+    "weight": {
+      "section": "",
+      "title": ""
+    }
+  }
+}
