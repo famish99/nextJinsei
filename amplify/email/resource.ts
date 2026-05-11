@@ -1,23 +1,13 @@
 import { Backend } from '@aws-amplify/backend'
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
-import { 
-  EmailIdentity, 
-  ReceiptRuleSet, 
-  ReceiptRule
-} from 'aws-cdk-lib/aws-ses'
+import { ReceiptRuleSet, ReceiptRule } from 'aws-cdk-lib/aws-ses'
 import { S3, Lambda, LambdaInvocationType } from 'aws-cdk-lib/aws-ses-actions'
 
 export function addEmailForwarding(backend: Backend<any>) {
   // Create S3 bucket for storing emails
   const emailBucket = new Bucket(backend.stack, 'EmailBucket', {
     bucketName: `${backend.stack.stackName}-email-storage`,
-  })
-
-  // Add domain identity for SES
-  const emailIdentity = new EmailIdentity(backend.stack, 'EmailIdentity', {
-    identity: { value: 'huannguyen.info' },
-    dkimSigning: true
   })
 
   // Get the Lambda function reference
@@ -67,7 +57,6 @@ export function addEmailForwarding(backend: Backend<any>) {
 
   return {
     emailBucket,
-    emailIdentity,
     ruleSet
   }
 }
