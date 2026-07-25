@@ -1,4 +1,4 @@
-import type { Schema } from '../../amplify/data/resource'
+import type { Schema } from '../../../../amplify/data/resource'
 
 export type StyleConfig = Schema['Styles']['type']
 

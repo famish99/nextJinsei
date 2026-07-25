@@ -6,7 +6,7 @@ import '@aws-amplify/ui-react/styles.css'
 import { Amplify } from 'aws-amplify'
 import React from 'react'
 
-import outputs from '../../../amplify_outputs.json'
+import outputs from '../../../../../amplify_outputs.json'
 
 Amplify.configure(outputs)
 

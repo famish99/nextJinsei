@@ -83,5 +83,15 @@ export function addDatabaseInfrastructure(backend: Backend<any>) {
     lambda.addEnvironment('RDS_DATABASE', 'mail_indexer');
   }
 
+  // Grant Data API access to the GraphQL Resolver Lambda
+  if (backend.graphqlResolver && backend.graphqlResolver.resources) {
+    const lambda = backend.graphqlResolver.resources.lambda;
+    cluster.grantDataApiAccess(lambda);
+    cluster.secret!.grantRead(lambda);
+    lambda.addEnvironment('RDS_CLUSTER_ARN', cluster.clusterArn);
+    lambda.addEnvironment('RDS_SECRET_ARN', cluster.secret!.secretArn);
+    lambda.addEnvironment('RDS_DATABASE', 'mail_indexer');
+  }
+
   return { cluster, vpc };
 }

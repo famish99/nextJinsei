@@ -1,6 +1,25 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend'
+import { graphqlResolver } from '../functions/graphql-resolver/resource'
 
 const schema = a.schema({
+  Email: a.customType({
+    id: a.string().required(),
+    messageId: a.string().required(),
+    sender: a.string().required(),
+    recipient: a.string().required(),
+    subject: a.string().required(),
+    bodyHtml: a.string(),
+    bodyText: a.string(),
+    spamScore: a.float(),
+    isSpam: a.boolean(),
+    receivedAt: a.string(),
+  }),
+
+  listEmails: a.query()
+    .returns(a.ref('Email').array())
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
   Phone: a.customType({
     countryCode: a.string().required(),
     raw: a.string().required(),

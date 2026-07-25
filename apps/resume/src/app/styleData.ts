@@ -43,7 +43,7 @@ export async function getHeaderSectionStyle() {
       'self-center',
       'md:text-3xl',
       'text-2xl',
-      'font-hairline',
+      'font-thin', // v1 `font-hairline`; both are font-weight 100
       'pb-p',
     ),
   }

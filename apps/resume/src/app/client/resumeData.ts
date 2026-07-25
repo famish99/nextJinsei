@@ -15,7 +15,7 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { getCurrentUser } from 'aws-amplify/auth'
 import { generateClient } from 'aws-amplify/data'
 
-import type { Schema } from '../../../amplify/data/resource'
+import type { Schema } from '../../../../../amplify/data/resource'
 
 const client = generateClient<Schema>({
   authMode: 'userPool',

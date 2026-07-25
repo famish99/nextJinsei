@@ -10,8 +10,8 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 
-import type { Schema } from '../../../amplify/data/resource'
-import outputs from '../../../amplify_outputs.json'
+import type { Schema } from '../../../../../amplify/data/resource'
+import outputs from '../../../../../amplify_outputs.json'
 
 export async function loadStyles(): Promise<StyleConfig> {
   const cookieBasedClient = generateServerClientUsingCookies<Schema>({

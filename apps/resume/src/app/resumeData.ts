@@ -3,8 +3,8 @@ import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/da
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 
-import type { Schema } from '../../amplify/data/resource'
-import outputs from '../../amplify_outputs.json'
+import type { Schema } from '../../../../amplify/data/resource'
+import outputs from '../../../../amplify_outputs.json'
 
 async function fetchData(): Promise<ResumeData> {
   const cookieBasedClient = generateServerClientUsingCookies<Schema>({

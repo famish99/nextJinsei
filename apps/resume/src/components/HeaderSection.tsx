@@ -22,7 +22,7 @@ export async function HeaderSection() {
       <header
         className="
               flex
-              row-gap-5
+              gap-y-5
               flex-row flex-wrap
               items-center
               mb-5

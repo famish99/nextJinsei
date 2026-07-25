@@ -23,7 +23,7 @@ export async function Contact() {
       <section className={style.sectionMargin} id="contact">
         <h2 className={style.header}>CONTACT</h2>
 
-        <ul className="print:flex-row flex flex-wrap flex-col sm:flex-row justify-between gap-2 list-inside pr-7">
+        <ul className="print:flex-row flex flex-wrap flex-col sm:flex-row justify-between gap-2 list-inside">
           <li className={style.text} id="email">
             <a
               href={`mailto:${email}`}
