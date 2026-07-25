@@ -11,10 +11,10 @@ export function addEmailForwarding(backend: Backend<any>) {
   })
 
   // Get the Lambda function reference
-  const emailForwarder = (backend.emailForwarder.resources as any).lambda
+  const emailProcessor = (backend.emailProcessor.resources as any).lambda
 
   // Add S3 permissions to Lambda
-  emailForwarder.addToRolePolicy(
+  emailProcessor.addToRolePolicy(
     new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ['s3:GetObject'],
@@ -22,17 +22,8 @@ export function addEmailForwarding(backend: Backend<any>) {
     })
   )
 
-  // Add SES permissions to Lambda  
-  emailForwarder.addToRolePolicy(
-    new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: ['ses:SendRawEmail'],
-      resources: ['*']
-    })
-  )
-
   // Add environment variable for bucket name
-  emailForwarder.addEnvironment('EMAIL_BUCKET', emailBucket.bucketName)
+  emailProcessor.addEnvironment('EMAIL_BUCKET', emailBucket.bucketName)
 
   // Create SES receipt rule set
   const ruleSet = new ReceiptRuleSet(backend.stack, 'EmailRuleSet', {
@@ -49,7 +40,7 @@ export function addEmailForwarding(backend: Backend<any>) {
         objectKeyPrefix: 'emails/'
       }),
       new Lambda({
-        function: emailForwarder,
+        function: emailProcessor,
         invocationType: LambdaInvocationType.EVENT
       })
     ]

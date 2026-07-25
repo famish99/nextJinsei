@@ -2,8 +2,9 @@ import { defineBackend } from '@aws-amplify/backend'
 
 import { auth } from './auth/resource'
 import { data } from './data/resource'
-import { emailForwarder } from './functions/email-forwarder/resource'
+import { emailProcessor } from './functions/email-processor/resource'
 import { addEmailForwarding } from './email/resource'
+import { addDatabaseInfrastructure } from './database/resource'
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
@@ -11,8 +12,11 @@ import { addEmailForwarding } from './email/resource'
 const backend = defineBackend({
   auth,
   data,
-  emailForwarder,
+  emailProcessor,
 })
 
 // Add email forwarding infrastructure
 addEmailForwarding(backend)
+
+// Add secure database infrastructure
+addDatabaseInfrastructure(backend)
