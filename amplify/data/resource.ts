@@ -1,6 +1,65 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend'
+import { graphqlResolver } from '../functions/graphql-resolver/resource'
 
 const schema = a.schema({
+  Label: a.customType({
+    id: a.string().required(),
+    name: a.string().required(),
+    color: a.string(),
+  }),
+
+  Filter: a.customType({
+    id: a.string().required(),
+    name: a.string().required(),
+    conditions: a.json().required(),
+    action: a.json().required(),
+  }),
+
+  Email: a.customType({
+    id: a.string().required(),
+    messageId: a.string().required(),
+    sender: a.string().required(),
+    recipient: a.string().required(),
+    subject: a.string().required(),
+    bodyHtml: a.string(),
+    bodyText: a.string(),
+    spamScore: a.float(),
+    isSpam: a.boolean(),
+    receivedAt: a.string(),
+    labels: a.ref('Label').array(),
+  }),
+
+  listEmails: a.query()
+    .returns(a.ref('Email').array())
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
+  listLabels: a.query()
+    .returns(a.ref('Label').array())
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
+  createLabel: a.mutation()
+    .arguments({ name: a.string().required(), color: a.string() })
+    .returns(a.ref('Label'))
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
+  listFilters: a.query()
+    .returns(a.ref('Filter').array())
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
+  createFilter: a.mutation()
+    .arguments({
+      name: a.string().required(),
+      conditions: a.json().required(),
+      action: a.json().required()
+    })
+    .returns(a.ref('Filter'))
+    .handler(a.handler.function(graphqlResolver))
+    .authorization(allow => [allow.authenticated()]),
+
   Phone: a.customType({
     countryCode: a.string().required(),
     raw: a.string().required(),
